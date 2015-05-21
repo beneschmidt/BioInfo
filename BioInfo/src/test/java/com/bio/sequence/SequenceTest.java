@@ -1,4 +1,4 @@
-package com.bio;
+package com.bio.sequence;
 
 import static org.junit.Assert.*;
 

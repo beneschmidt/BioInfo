@@ -1,6 +1,5 @@
 package com.bio.sequence;
 
-import com.bio.Alphabet;
 
 public class Sequence {
 	
@@ -14,21 +13,27 @@ public class Sequence {
 		this.value = value;
 	}
 
+	/**
+	 * 
+	 * @param n
+	 * @return a random combination of SequenceCharacter
+	 * @throws SequenceTooShortException
+	 */
 	public static String generate(int n) throws SequenceTooShortException{
 		if(n < 1){
 			throw new SequenceTooShortException(n);
 		}
 		StringBuilder s = new StringBuilder();
 		for(int i = 0; i <n; i++){
-			s.append(Alphabet.getRandomChar());
+			s.append(SequenceCharacter.getRandomChar());
 		}
 		return s.toString();
 	}
 	
 	/**
-	 * @param s
-	 * @param i
-	 * @return
+	 * @param s sequence to compare to
+	 * @param i index
+	 * @return true if the own sequence suffix equals the full other sequence starting from the given index, false otherwise
 	 * @throws SequenceIndexTooLowException
 	 */
 	public boolean compare(Sequence s, int i) throws SequenceIndexTooLowException{
