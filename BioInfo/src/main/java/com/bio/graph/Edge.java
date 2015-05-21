@@ -5,7 +5,7 @@ package com.bio.graph;
  */
 public interface Edge {
 	
-	int getWeight();
+	Integer getWeight();
 	
 	Node getSuccessor();
 	

@@ -7,14 +7,14 @@ public class SequenceNode implements Node{
 
 	private List<Edge> edges;
 	
+	
 	public SequenceNode(){
 		edges = new LinkedList<Edge>();
 	}
 	
 	@Override
 	public int getGrade() {
-		// TODO Auto-generated method stub
-		return 0;
+		return edges.size();
 	}
 	
 	public void addEdge(DirectedEdge edge){
