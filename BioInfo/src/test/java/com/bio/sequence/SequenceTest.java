@@ -138,4 +138,13 @@ public class SequenceTest {
 		assertEquals(shouldBe, actuallyIs);
 	}
 
+	@Test
+	public void testMerge(){
+		Sequence a = new Sequence("ATGT");
+		Sequence b = new Sequence("GTAAA");
+		
+		a.merge(b, 2);
+		
+		assertEquals("ATGTAAA", a.getValue());
+	}
 }

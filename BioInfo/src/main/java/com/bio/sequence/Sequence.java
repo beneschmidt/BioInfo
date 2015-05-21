@@ -78,4 +78,15 @@ public class Sequence {
 		// TODO klaeren wann eine Sequence ein valider DNA-Strang is
 		return true;
 	}
+	
+	/**
+	 * merges another Sequence value to the current value of the own sequence. This means the current value is taken and the 
+	 * rest String of the merged sequence is added. Here's an example:
+	 * <p>String a = ATCT, String b = CTGG, overlap is therefore 2, a.merge(b) = ATCTGG</p>
+	 * @param s sequence to merge with
+	 * @param overlap
+	 */
+	public void merge(Sequence s, int overlap){
+		this.value += s.getValue().substring(overlap);
+	}
 }
