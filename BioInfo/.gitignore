@@ -3,3 +3,4 @@
 /log/
 .settings/
 .classpath/
+./.classpath
