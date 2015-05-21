@@ -1,6 +1,6 @@
 package com.bio.graph;
 
-public class DirectedEdge implements Edge,Comparable<DirectedEdge>{
+public class DirectedEdge implements Edge, Comparable<DirectedEdge> {
 
 	private Node predecessor;
 	private Node successor;
@@ -46,10 +46,21 @@ public class DirectedEdge implements Edge,Comparable<DirectedEdge>{
 	}
 
 	/**
-	 * natural order: weight descending
+	 * natural order: weight descending - sequence predecessor - sequence successor
 	 */
 	@Override
 	public int compareTo(DirectedEdge o) {
-		return o.getWeight().compareTo(getWeight());
+		int weightCompare = o.getWeight().compareTo(getWeight());
+		if (weightCompare == 0) {
+			int sequencePredCompare = ((SequenceNode) getPredecessor()).getSequence().getValue()
+					.compareTo(((SequenceNode) o.getPredecessor()).getSequence().getValue());
+			if (sequencePredCompare == 0) {
+				return ((SequenceNode) getSuccessor()).getSequence().getValue().compareTo(((SequenceNode) o.getSuccessor()).getSequence().getValue());
+			} else {
+				return sequencePredCompare;
+			}
+		} else {
+			return weightCompare;
+		}
 	}
 }
