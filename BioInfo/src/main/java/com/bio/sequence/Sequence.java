@@ -21,7 +21,6 @@ public class Sequence {
 	}
 
 	/**
-	 * 
 	 * @param n
 	 * @return a random combination of SequenceCharacter
 	 * @throws SequenceTooShortException
@@ -73,8 +72,15 @@ public class Sequence {
 		return maxOverlap;
 	}
 
+	/**
+	 * @return true if the Sequence only contains valid characters
+	 */
 	public boolean isValid() {
-		// TODO klaeren wann eine Sequence ein valider DNA-Strang is
+		for(int i = 0; i < value.length(); i++){
+			if(!SequenceCharacter.isCharSequenceCharacter(value.charAt(i))){
+				return false;
+			}
+		}
 		return true;
 	}
 

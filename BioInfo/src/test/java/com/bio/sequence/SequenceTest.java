@@ -147,4 +147,23 @@ public class SequenceTest {
 		
 		assertEquals("ATGTAAA", a.getValue());
 	}
+	
+	@Test
+	public void testIsValidWithValidString(){
+		Sequence a = new Sequence("ATGCTATCT");
+		assertTrue(a.isValid());
+	}
+	
+	@Test
+	public void testIsValidWithEmptyString(){
+		Sequence a = new Sequence("");
+		assertTrue(a.isValid());
+	}
+	
+	@Test
+	public void testIsValidWithInvalidString(){
+		//B is not allowed
+		Sequence a = new Sequence("ABC");
+		assertFalse(a.isValid());
+	}
 }

@@ -9,4 +9,13 @@ public enum SequenceCharacter {
 		int randomInt = NumberUtils.randInt(0, 3);
 		return SequenceCharacter.values()[randomInt];
 	}
+	
+	public static boolean isCharSequenceCharacter(char c){
+		for(SequenceCharacter s : SequenceCharacter.values()){
+			if(c==s.name().charAt(0)){
+				return true;
+			}
+		}
+		return false;
+	}
 }

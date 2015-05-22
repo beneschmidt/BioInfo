@@ -55,35 +55,4 @@ public class SequenceNode implements Node {
 		return "SequenceNode [sequence=" + sequence + "]";
 	}
 
-	public void merge(DirectedEdge edge) {
-		SequenceNode nextNode = (SequenceNode) edge.getSuccessor();
-		this.sequence.merge(nextNode.getSequence(), edge.getWeight());
-		// TODO: remove own node from the graph
-		clearEdges(this);
-
-		// TODO: remove next node from the graph
-		clearEdges(nextNode);
-
-		// TODO: add merged node to the graph
-	}
-
-	/**
-	 * clears all incoming and outgoing edges. First the incoming edges are cleared from the successors and then cleared here, next the outgoing edges are cleared
-	 * from the predecessors and then cleared here. Because we have a double linked list implementation of the edges this is important.
-	 * @param sequenceNode
-	 */
-	private void clearEdges(SequenceNode sequenceNode) {
-		// remove incoming edges
-		for (Edge edge : sequenceNode.incomingEdges) {
-			edge.getPredecessor().getEdges().remove(edge);
-		}
-		incomingEdges = new LinkedList<Edge>();
-
-		// remove outgoing edges
-		for (Edge edge : sequenceNode.edges) {
-			SequenceNode node = (SequenceNode) edge.getSuccessor();
-			node.getIncomingEdges().remove(edge);
-		}
-		edges = new LinkedList<Edge>();
-	}
 }

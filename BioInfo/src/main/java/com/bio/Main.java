@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.bio.graph.DNAGraph;
+import com.bio.graph.GreedySequenceAssembler;
+import com.bio.graph.SequenceAssembler;
 import com.bio.sequence.Sequence;
 import com.bio.utilities.FileReaderHelper;
 import com.bio.utilities.FileWriterHelper;
@@ -23,6 +25,9 @@ public class Main {
 		}
 		String s = graph.createGraphViz();
 		FileWriterHelper.writeToFile("graphviz.gv", s);
+		
+		SequenceAssembler<DNAGraph> greedy = new GreedySequenceAssembler();
+		greedy.assembleGraph(graph);
 
 	}
 }
