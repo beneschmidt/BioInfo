@@ -22,6 +22,8 @@ public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {
 
 		GraphVizCreator creator = new DNAGraphVizCreator(g);
 
+		long start = System.currentTimeMillis();
+
 		while (!g.isCompletelyMerged()) {
 			logger.info("merge with current graph size: " + g.getNodes().size());
 			HamiltonPathCalculator<SequenceNode, DirectedEdge> p = new HamiltonPathCalculator<>(g.getNodes());
@@ -34,6 +36,7 @@ public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {
 		}
 
 		logger.info("Number of merges: " + i);
+		logger.info("Time taken: " + ((System.currentTimeMillis() - start) / 1000) + " sec");
 		return g;
 	}
 }
