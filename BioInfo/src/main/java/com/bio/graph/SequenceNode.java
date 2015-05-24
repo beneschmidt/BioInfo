@@ -60,6 +60,15 @@ public class SequenceNode implements Node {
 		return getSequence().overlap(otherNode.getSequence());
 	}
 
+	public Edge getEdgeToNode(Node node) {
+		for (Edge edge : edges) {
+			if (edge.getSuccessor().equals(node)) {
+				return edge;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return "SequenceNode [sequence=" + sequence + "]";

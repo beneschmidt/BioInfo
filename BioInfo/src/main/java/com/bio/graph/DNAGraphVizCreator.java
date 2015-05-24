@@ -23,15 +23,12 @@ public class DNAGraphVizCreator extends GraphVizCreator {
 		StringBuilder s = new StringBuilder();
 
 		s.append("rankdir = TB;").append(NEW_LINE);
-		for (DirectedEdge edge : graph.getEdges()) {
-			s.append(((SequenceNode) edge.getPredecessor()).getSequence().getValue()).append(" -> ")
-					.append(((SequenceNode) edge.getSuccessor()).getSequence().getValue()).append(" [label=\"").append(edge.getWeight()).append("\"]")
-					.append(";").append(NEW_LINE);
-		}
 		for (SequenceNode node : graph.getNodes()) {
-			if (node.getEdges().size() == 0) {
-				s.append(node.getSequence().getValue()).append(";").append(NEW_LINE);
-			}
+			s.append(node.getId()).append(" [label=\"").append(node.getId()).append(": ").append(node.getSequence().getValue()).append("\"];").append(NEW_LINE);
+		}
+		for (DirectedEdge edge : graph.getEdges()) {
+			s.append(edge.getPredecessor().getId()).append(" -> ").append(edge.getSuccessor().getId()).append(" [label=\"").append(edge.getWeight())
+					.append("\"]").append(";").append(NEW_LINE);
 		}
 		return s.toString();
 	}

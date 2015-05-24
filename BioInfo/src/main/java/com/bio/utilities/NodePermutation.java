@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.bio.graph.Node;
+import com.bio.graph.NodeSequence;
 
 /**
  * creates full permutations of Nodes
@@ -18,14 +19,19 @@ public class NodePermutation<T extends Node> {
 		this.inputList = inputList;
 	}
 
-	public List<List<T>> combine() {
-		List<List<T>> finished = combine(new LinkedList<T>(), inputList);
+	public List<NodeSequence<T>> combine() {
+		long start = System.currentTimeMillis();
+		List<NodeSequence<T>> finished = combine(new LinkedList<T>(), inputList);
+		System.out.println("Time: " + (System.currentTimeMillis() - start));
 
 		return finished;
 	}
 
-	public List<List<T>> combine(List<T> alreadyList, List<T> sublist) {
-		List<List<T>> fullList = new LinkedList<List<T>>();
+	public List<NodeSequence<T>> combine(List<T> alreadyList, List<T> sublist) {
+		List<NodeSequence<T>> fullList = new LinkedList<NodeSequence<T>>();
+		if (!new NodeSequence<T>(alreadyList).isValid()) {
+			return fullList;
+		}
 		for (int i = 0; i < sublist.size(); i++) {
 			List<T> newL = new LinkedList<T>(sublist);
 			LinkedList<T> alreadyList2 = new LinkedList<T>(alreadyList);
@@ -33,18 +39,16 @@ public class NodePermutation<T extends Node> {
 			fullList.addAll(combine(alreadyList2, newL));
 		}
 		if (sublist.size() == 0) {
-			fullList.add(alreadyList);
+			NodeSequence<T> seq = new NodeSequence<T>(alreadyList);
+			fullList.add(seq);
 		}
 		return fullList;
 	}
 
-	public void print(List<List<T>> finished) {
-		for (List<T> subList : finished) {
-			String s = "";
-			for (T t : subList) {
-				s += t.getId();
-			}
-			System.out.println(s);
+	public void print(List<NodeSequence<T>> finished) {
+		for (NodeSequence<T> subList : finished) {
+			if (subList.isValid())
+				System.out.println(subList.toSequenceString());
 		}
 	}
 }

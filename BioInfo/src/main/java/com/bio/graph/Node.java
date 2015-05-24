@@ -8,4 +8,6 @@ public interface Node {
 	List<Edge> getEdges();
 
 	long getId();
+
+	Edge getEdgeToNode(Node node);
 }
