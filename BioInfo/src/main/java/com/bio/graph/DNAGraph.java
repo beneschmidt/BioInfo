@@ -45,8 +45,8 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 	 * The created Node and all created edges are then added to the graph's lists
 	 * @param sequence
 	 */
-	public void insertNewSequence(Sequence sequence) {
-		SequenceNode newNode = new SequenceNode();
+	public void insertNewSequence(Sequence sequence, long id) {
+		SequenceNode newNode = new SequenceNode(id);
 		newNode.setSequence(sequence);
 
 		for (SequenceNode otherNode : nodes) {
@@ -80,37 +80,19 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		logger.debug("new Edge: " + newEdge);
 	}
 
-	public String createGraphViz() {
-		StringBuilder s = new StringBuilder();
-		s.append("digraph G {\n");
-		s.append("rankdir = TB;\n");
-		for (DirectedEdge edge : getEdges()) {
-			s.append(((SequenceNode) edge.getPredecessor()).getSequence().getValue()).append(" -> ")
-					.append(((SequenceNode) edge.getSuccessor()).getSequence().getValue()).append(" [label=\"").append(edge.getWeight()).append("\"]")
-					.append(";\n");
-		}
-		for(SequenceNode node : nodes){
-			if(node.getEdges().size()==0){
-				s.append(node.getSequence().getValue()).append(";\n");
-			}
-		}
-		s.append("}");
-		return s.toString();
+	public boolean isCompletelyMerged() {
+		return edges.size() == 0;
 	}
-	
-	public boolean isCompletelyMerged(){
-		return edges.size()==0;
-	}
-	
-	public void mergeNodesOfHighestEdge(){
+
+	public void mergeNodesOfHighestEdge() {
 		DirectedEdge highestEdge = edges.first();
-		String s1 = ((SequenceNode)highestEdge.getPredecessor()).getSequence().getValue();
-		String s2 = ((SequenceNode)highestEdge.getSuccessor()).getSequence().getValue();
+		String s1 = ((SequenceNode) highestEdge.getPredecessor()).getSequence().getValue();
+		String s2 = ((SequenceNode) highestEdge.getSuccessor()).getSequence().getValue();
 		Sequence sequence = mergeAndClear(highestEdge);
-		logger.info("Merge "+s1+" and "+s2+" to "+sequence.getValue()+", weight: "+highestEdge.getWeight());
-		insertNewSequence(sequence);
+		logger.debug("Merge " + s1 + " and " + s2 + " to " + sequence.getValue() + ", weight: " + highestEdge.getWeight());
+		insertNewSequence(sequence, highestEdge.getPredecessor().getId());
 	}
-	
+
 	public Sequence mergeAndClear(DirectedEdge edge) {
 		SequenceNode pre = (SequenceNode) edge.getPredecessor();
 		nodes.remove(pre);
@@ -119,7 +101,7 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		pre.getSequence().merge(suc.getSequence(), edge.getWeight());
 		clearEdges(pre);
 		clearEdges(suc);
-		
+
 		return pre.getSequence();
 	}
 

@@ -7,13 +7,15 @@ import com.bio.sequence.Sequence;
 
 public class SequenceNode implements Node {
 
+	private long id;
 	private List<Edge> edges;
 	private List<Edge> incomingEdges;
 	private Sequence sequence;
 
-	public SequenceNode() {
+	public SequenceNode(long id) {
 		edges = new LinkedList<Edge>();
 		incomingEdges = new LinkedList<Edge>();
+		this.id = id;
 	}
 
 	@Override
@@ -44,6 +46,14 @@ public class SequenceNode implements Node {
 
 	public void setSequence(Sequence sequence) {
 		this.sequence = sequence;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public int overlaps(SequenceNode otherNode) {
