@@ -1,34 +1,34 @@
 package com.bio.graph;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-public class NodeSequence<T extends Node> implements Comparable<NodeSequence<T>> {
+public class HamiltonPath<T extends Node, K extends Edge> implements Comparable<HamiltonPath<T, K>> {
 
 	private List<T> nodes;
+	private Set<K> edges;
 	private Integer weight;
 	private boolean valid;
 
-	public NodeSequence() {
-		this.nodes = new LinkedList<>();
-	}
-
-	public NodeSequence(List<T> nodes, Integer weight) {
+	/**
+	 * checkes the list of nodes for the edges between them and checks their valid state and the full edges weight (if valid)
+	 * @param nodes
+	 */
+	public HamiltonPath(List<T> nodes) {
 		this.nodes = nodes;
-		this.weight = weight;
-	}
-
-	public NodeSequence(List<T> nodes) {
-		this.nodes = nodes;
+		this.edges = new TreeSet<K>();
 		valid = true;
 		weight = 0;
 		for (int i = 0; i < nodes.size() - 1; i++) {
 			T currentNode = nodes.get(i);
-			Edge edge = currentNode.getEdgeToNode(nodes.get(i + 1));
+			@SuppressWarnings("unchecked")
+			K edge = (K) currentNode.getEdgeToNode(nodes.get(i + 1));
 			if (edge == null) {
 				valid = false;
 			} else {
 				weight += edge.getWeight();
+				edges.add(edge);
 			}
 		}
 	}
@@ -57,40 +57,22 @@ public class NodeSequence<T extends Node> implements Comparable<NodeSequence<T>>
 		this.valid = valid;
 	}
 
+	public Set<K> getEdges() {
+		return edges;
+	}
+
 	@Override
 	public String toString() {
 		return "NodeSequence [nodes=" + nodes + ", weight=" + weight + ", valid=" + valid + "]";
 	}
 
-	public String toSequenceString() {
-		StringBuilder s = new StringBuilder();
-		if (!valid) {
-			s.append("INVALID: ");
-			for (T t : nodes) {
-				s.append(t.getId()).append("->");
-			}
-		} else {
-			s.append("VALID(").append(weight).append("): ");
-			for (T t : nodes) {
-				s.append(t.getId()).append("->");
-			}
-		}
-		s.delete(s.length() - 2, s.length());
-		return s.toString();
-	}
-
-	public NodeSequence<T> copy() {
-		NodeSequence<T> copy = new NodeSequence<T>(new LinkedList<T>(nodes), weight);
-		return copy;
-	}
-
 	/**
-	 * natural order: valid - weight - toString
+	 * natural order: valid - descending weight - toString
 	 */
 	@Override
-	public int compareTo(NodeSequence<T> o) {
+	public int compareTo(HamiltonPath<T, K> o) {
 		if (valid) {
-			int compareWeight = getWeight().compareTo(o.getWeight());
+			int compareWeight = o.getWeight().compareTo(getWeight());
 			if (compareWeight == 0) {
 				return toString().compareTo(o.toString());
 			} else {

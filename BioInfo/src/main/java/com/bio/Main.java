@@ -10,12 +10,9 @@ import com.bio.graph.DNAGraphVizCreator;
 import com.bio.graph.GraphFactory;
 import com.bio.graph.GraphVizCreator;
 import com.bio.graph.GreedySequenceAssembler;
-import com.bio.graph.NodeSequence;
 import com.bio.graph.SequenceAssembler;
-import com.bio.graph.SequenceNode;
 import com.bio.utilities.FileReaderHelper;
 import com.bio.utilities.FileWriterHelper;
-import com.bio.utilities.NodePermutation;
 
 public class Main {
 
@@ -29,13 +26,11 @@ public class Main {
 		String s = creator.toString();
 		FileWriterHelper.writeToFile("graphviz.gv", s);
 
-		NodePermutation<SequenceNode> p = new NodePermutation<SequenceNode>(graph.getNodes().subList(0, 15));
-		List<NodeSequence<SequenceNode>> permutation = p.combine();
-		System.out.println(permutation.size());
-		//		p.print(permutation);
-
+		logger.info("Assemble graph to create the sequence...");
 		SequenceAssembler<DNAGraph> greedy = new GreedySequenceAssembler();
 		greedy.assembleGraph(graph);
+		logger.info("graph assembled, here's the finished sequence");
+		logger.info(graph.getNodes().iterator().next().getSequence().getValue());
 
 	}
 }

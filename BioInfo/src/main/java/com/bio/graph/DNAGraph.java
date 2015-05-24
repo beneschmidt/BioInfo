@@ -48,7 +48,10 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 	public void insertNewSequence(Sequence sequence, long id) {
 		SequenceNode newNode = new SequenceNode(id);
 		newNode.setSequence(sequence);
+		insertNewNode(newNode);
+	}
 
+	public void insertNewNode(SequenceNode newNode) {
 		for (SequenceNode otherNode : nodes) {
 			int firstOverlap = newNode.overlaps(otherNode);
 			if (firstOverlap > 0) {
@@ -60,7 +63,6 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 			}
 		}
 		this.addNode(newNode);
-
 	}
 
 	/**
@@ -84,16 +86,18 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		return edges.size() == 0;
 	}
 
-	public void mergeNodesOfHighestEdge() {
-		DirectedEdge highestEdge = edges.first();
-		String s1 = ((SequenceNode) highestEdge.getPredecessor()).getSequence().getValue();
-		String s2 = ((SequenceNode) highestEdge.getSuccessor()).getSequence().getValue();
-		Sequence sequence = mergeAndClear(highestEdge);
-		logger.debug("Merge " + s1 + " and " + s2 + " to " + sequence.getValue() + ", weight: " + highestEdge.getWeight());
-		insertNewSequence(sequence, highestEdge.getPredecessor().getId());
+	/**
+	 * merge the nodes of an edge (predecessor and successor) to a single node. All outgoing and incoming edges have to be remove and the node is reinserted
+	 * @param edge
+	 */
+	public void mergeNodesOfEdge(DirectedEdge edge) {
+		SequenceNode node = mergeAndClear(edge);
+		logger.debug("Merge " + edge.getPredecessor().getId() + " and " + edge.getSuccessor().getId() + " to " + node.getSequence().getValue() + ", weight: "
+				+ edge.getWeight());
+		insertNewNode(node);
 	}
 
-	public Sequence mergeAndClear(DirectedEdge edge) {
+	public SequenceNode mergeAndClear(DirectedEdge edge) {
 		SequenceNode pre = (SequenceNode) edge.getPredecessor();
 		nodes.remove(pre);
 		SequenceNode suc = (SequenceNode) edge.getSuccessor();
@@ -102,7 +106,7 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		clearEdges(pre);
 		clearEdges(suc);
 
-		return pre.getSequence();
+		return pre;
 	}
 
 	/**

@@ -2,34 +2,37 @@ package com.bio.utilities;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
+import com.bio.graph.Edge;
 import com.bio.graph.Node;
-import com.bio.graph.NodeSequence;
+import com.bio.graph.HamiltonPath;
 
 /**
  * creates full permutations of Nodes
  *
  * @param <T>
  */
-public class NodePermutation<T extends Node> {
+public class HamiltonPathCalculator<T extends Node, K extends Edge> {
 
 	private List<T> inputList;
 
-	public NodePermutation(List<T> inputList) {
+	public HamiltonPathCalculator(List<T> inputList) {
 		this.inputList = inputList;
 	}
 
-	public List<NodeSequence<T>> combine() {
+	public Set<HamiltonPath<T, K>> calculateHamiltonPaths() {
 		long start = System.currentTimeMillis();
-		List<NodeSequence<T>> finished = combine(new LinkedList<T>(), inputList);
+		Set<HamiltonPath<T, K>> finished = combine(new LinkedList<T>(), inputList);
 		System.out.println("Time: " + (System.currentTimeMillis() - start));
 
 		return finished;
 	}
 
-	public List<NodeSequence<T>> combine(List<T> alreadyList, List<T> sublist) {
-		List<NodeSequence<T>> fullList = new LinkedList<NodeSequence<T>>();
-		if (!new NodeSequence<T>(alreadyList).isValid()) {
+	private Set<HamiltonPath<T, K>> combine(List<T> alreadyList, List<T> sublist) {
+		Set<HamiltonPath<T, K>> fullList = new TreeSet<>();
+		if (!new HamiltonPath<T, K>(alreadyList).isValid()) {
 			return fullList;
 		}
 		for (int i = 0; i < sublist.size(); i++) {
@@ -39,16 +42,9 @@ public class NodePermutation<T extends Node> {
 			fullList.addAll(combine(alreadyList2, newL));
 		}
 		if (sublist.size() == 0) {
-			NodeSequence<T> seq = new NodeSequence<T>(alreadyList);
+			HamiltonPath<T, K> seq = new HamiltonPath<>(alreadyList);
 			fullList.add(seq);
 		}
 		return fullList;
-	}
-
-	public void print(List<NodeSequence<T>> finished) {
-		for (NodeSequence<T> subList : finished) {
-			if (subList.isValid())
-				System.out.println(subList.toSequenceString());
-		}
 	}
 }
