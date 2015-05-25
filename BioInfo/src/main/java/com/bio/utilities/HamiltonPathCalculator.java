@@ -30,9 +30,16 @@ public class HamiltonPathCalculator<T extends Node, K extends Edge> {
 		return finished;
 	}
 
+	/**
+	 * stops if the so far build path is not valid to improve runtime
+	 * @param alreadyList
+	 * @param sublist
+	 * @return Set of Hamilton paths
+	 */
 	private Set<HamiltonPath<T, K>> combine(List<T> alreadyList, List<T> sublist) {
 		Set<HamiltonPath<T, K>> fullList = new TreeSet<HamiltonPath<T, K>>();
-		if (!new HamiltonPath<T, K>(alreadyList).isValid()) {
+		boolean currentPathValid = new HamiltonPath<T, K>(alreadyList).isValid();
+		if (!currentPathValid) {
 			return fullList;
 		}
 		for (int i = 0; i < sublist.size(); i++) {
