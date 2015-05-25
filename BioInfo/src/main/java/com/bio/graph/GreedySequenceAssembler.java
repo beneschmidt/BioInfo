@@ -26,7 +26,7 @@ public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {
 
 		while (!g.isCompletelyMerged()) {
 			logger.info("merge with current graph size: " + g.getNodes().size());
-			HamiltonPathCalculator<SequenceNode, DirectedEdge> p = new HamiltonPathCalculator<>(g.getNodes());
+			HamiltonPathCalculator<SequenceNode, DirectedEdge> p = new HamiltonPathCalculator<SequenceNode, DirectedEdge>(g.getNodes());
 			Set<HamiltonPath<SequenceNode, DirectedEdge>> permutation = p.calculateHamiltonPaths();
 			HamiltonPath<SequenceNode, DirectedEdge> firstSeq = permutation.iterator().next();
 			g.mergeNodesOfEdge(firstSeq.getEdges().iterator().next());

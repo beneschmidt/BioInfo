@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.bio.graph.Edge;
-import com.bio.graph.Node;
 import com.bio.graph.HamiltonPath;
+import com.bio.graph.Node;
 
 /**
  * creates full permutations of Nodes
@@ -31,7 +31,7 @@ public class HamiltonPathCalculator<T extends Node, K extends Edge> {
 	}
 
 	private Set<HamiltonPath<T, K>> combine(List<T> alreadyList, List<T> sublist) {
-		Set<HamiltonPath<T, K>> fullList = new TreeSet<>();
+		Set<HamiltonPath<T, K>> fullList = new TreeSet<HamiltonPath<T, K>>();
 		if (!new HamiltonPath<T, K>(alreadyList).isValid()) {
 			return fullList;
 		}
@@ -42,7 +42,7 @@ public class HamiltonPathCalculator<T extends Node, K extends Edge> {
 			fullList.addAll(combine(alreadyList2, newL));
 		}
 		if (sublist.size() == 0) {
-			HamiltonPath<T, K> seq = new HamiltonPath<>(alreadyList);
+			HamiltonPath<T, K> seq = new HamiltonPath<T, K>(alreadyList);
 			fullList.add(seq);
 		}
 		return fullList;
