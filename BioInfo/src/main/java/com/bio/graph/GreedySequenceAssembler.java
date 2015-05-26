@@ -1,13 +1,11 @@
 package com.bio.graph;
 
-import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.bio.utilities.FastHamiltonPathCalculatorById;
 import com.bio.utilities.FileWriterHelper;
 import com.bio.utilities.HamiltonPathCalculator;
-import com.bio.utilities.IntegerHamiltonPathCalculator;
 
 public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {
 	private static final Logger logger = LogManager.getLogger(GreedySequenceAssembler.class);
@@ -26,12 +24,11 @@ public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {
 		long start = System.currentTimeMillis();
 
 		while (!g.isCompletelyMerged()) {
-			logger.info("merge with current graph size: " + g.getNodes().size());
-			HamiltonPathCalculator<SequenceNode, DirectedEdge> p = new IntegerHamiltonPathCalculator<SequenceNode, DirectedEdge>(g.getNodes(), g.getNodeMap());
-			Set<HamiltonPath<SequenceNode, DirectedEdge>> permutation = p.calculateHamiltonPaths();
-			logger.info("number of hamilton paths: " + permutation.size());
-			HamiltonPath<SequenceNode, DirectedEdge> firstSeq = permutation.iterator().next();
-			g.mergeNodesOfEdge(firstSeq.getEdges().iterator().next());
+			HamiltonPathCalculator<SequenceNode, DirectedEdge> p = new FastHamiltonPathCalculatorById<SequenceNode, DirectedEdge>(g.getNodeMap());
+			HamiltonPath<SequenceNode, DirectedEdge> hamiltonPath = p.getMaxHamiltonPath();
+			DirectedEdge e = hamiltonPath.getEdges().iterator().next();
+			logger.info("merge two nodes: " + e.getPredecessor().getId() + " - " + e.getSuccessor().getId());
+			g.mergeNodesOfEdge(e);
 			String s = creator.toString();
 			FileWriterHelper.writeToFile("graphviz_" + i + ".gv", s);
 			i++;

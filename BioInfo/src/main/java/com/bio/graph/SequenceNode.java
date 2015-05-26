@@ -40,6 +40,14 @@ public class SequenceNode implements Node {
 		return incomingEdges;
 	}
 
+	public void clearIncomingEdges() {
+		incomingEdges = new LinkedList<Edge>();
+	}
+
+	public void clearEdges() {
+		edges = new LinkedList<Edge>();
+	}
+
 	public Sequence getSequence() {
 		return sequence;
 	}

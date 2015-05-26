@@ -21,7 +21,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		List<String> lines = FileReaderHelper.readFile("resources/frag.dat");
-		DNAGraph graph = GraphFactory.createFromSequences(lines.subList(0,16));
+		DNAGraph graph = GraphFactory.createFromSequences(lines.subList(0, 16));
 		String s2 = "";
 		for (String n : lines) {
 			s2 += n;

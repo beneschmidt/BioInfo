@@ -16,18 +16,21 @@ public class IntegerHamiltonPathCalculator<T extends Node, K extends Edge> imple
 
 	public IntegerHamiltonPathCalculator(List<T> inputList, Map<Integer, T> nodeMap) {
 		inputIdList = new LinkedList<Integer>();
-		for(Node n : inputList){
-			inputIdList.add((int)n.getId());
+		for (Node n : inputList) {
+			inputIdList.add((int) n.getId());
 		}
-		this.nodeMap=nodeMap;
+		this.nodeMap = nodeMap;
 	}
 
-	public Set<HamiltonPath<T, K>> calculateHamiltonPaths() {
+	public HamiltonPath<T, K> getMaxHamiltonPath() {
 		long start = System.currentTimeMillis();
 		Set<HamiltonPath<T, K>> finished = combine(new LinkedList<Integer>(), inputIdList);
 		System.out.println("Time: " + (System.currentTimeMillis() - start));
-
-		return finished;
+		if (finished.size() > 0) {
+			return finished.iterator().next();
+		} else {
+			return null;
+		}
 	}
 
 	/**

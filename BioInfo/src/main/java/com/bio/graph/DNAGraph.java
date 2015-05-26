@@ -104,9 +104,9 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		nodes.remove(pre);
 		SequenceNode suc = (SequenceNode) edge.getSuccessor();
 		nodes.remove(suc);
-		pre.getSequence().merge(suc.getSequence(), edge.getWeight());
 		clearEdges(pre);
 		clearEdges(suc);
+		pre.getSequence().merge(suc.getSequence(), edge.getWeight());
 
 		return pre;
 	}
@@ -122,6 +122,7 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 			edge.getPredecessor().getEdges().remove(edge);
 			this.getEdges().remove(edge);
 		}
+		sequenceNode.clearIncomingEdges();
 
 		// remove outgoing edges
 		for (Edge edge : sequenceNode.getEdges()) {
@@ -129,12 +130,13 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 			node.getIncomingEdges().remove(edge);
 			this.getEdges().remove(edge);
 		}
+		sequenceNode.clearEdges();
 	}
-	
-	public Map<Integer, SequenceNode> getNodeMap(){
+
+	public Map<Integer, SequenceNode> getNodeMap() {
 		Map<Integer, SequenceNode> nodeMap = new TreeMap<>();
-		for(Node node : nodes){
-			nodeMap.put(Integer.parseInt(node.getId()+""), (SequenceNode)node);
+		for (Node node : nodes) {
+			nodeMap.put(Integer.parseInt(node.getId() + ""), (SequenceNode) node);
 		}
 		return nodeMap;
 	}

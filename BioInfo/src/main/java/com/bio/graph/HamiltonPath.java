@@ -34,13 +34,22 @@ public class HamiltonPath<T extends Node, K extends Edge> implements Comparable<
 			}
 		}
 	}
-	
-	public static <T extends Node, K extends Edge> HamiltonPath<T,K> fromIds(List<Integer> nodeIds, Map<Integer, T> nodeMap){
+
+	public static <T extends Node, K extends Edge> HamiltonPath<T, K> fromIds(List<Integer> nodeIds, Map<Integer, T> nodeMap) {
 		List<T> nodes = new LinkedList<T>();
-		for(Integer nodeId: nodeIds){
+		for (Integer nodeId : nodeIds) {
 			nodes.add(nodeMap.get(nodeId));
 		}
-		
+
+		return new HamiltonPath<T, K>(nodes);
+	}
+
+	public static <T extends Node, K extends Edge> HamiltonPath<T, K> fromLongIds(List<Long> nodeIds, Map<Integer, T> nodeMap) {
+		List<T> nodes = new LinkedList<T>();
+		for (Long nodeId : nodeIds) {
+			nodes.add(nodeMap.get(Integer.parseInt(nodeId + "")));
+		}
+
 		return new HamiltonPath<T, K>(nodes);
 	}
 

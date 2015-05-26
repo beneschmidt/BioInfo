@@ -22,12 +22,16 @@ public class NodeHamiltonPathCalculator<T extends Node, K extends Edge> implemen
 		this.inputList = inputList;
 	}
 
-	public Set<HamiltonPath<T, K>> calculateHamiltonPaths() {
+	public HamiltonPath<T, K> getMaxHamiltonPath() {
 		long start = System.currentTimeMillis();
 		Set<HamiltonPath<T, K>> finished = combine(new LinkedList<T>(), inputList);
 		System.out.println("Time: " + (System.currentTimeMillis() - start));
 
-		return finished;
+		if (finished.size() > 0) {
+			return finished.iterator().next();
+		} else {
+			return null;
+		}
 	}
 
 	/**
