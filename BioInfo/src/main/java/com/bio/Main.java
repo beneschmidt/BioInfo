@@ -12,6 +12,7 @@ import com.bio.graph.GraphVizCreator;
 import com.bio.graph.GreedySequenceAssembler;
 import com.bio.graph.SequenceAssembler;
 import com.bio.sequence.Sequence;
+import com.bio.utilities.DNAGraphValidator;
 import com.bio.utilities.FileReaderHelper;
 import com.bio.utilities.FileWriterHelper;
 
@@ -39,5 +40,9 @@ public class Main {
 		logger.info("graph assembled, here's the finished sequence");
 		Sequence sequence = graph.getNodes().iterator().next().getSequence();
 		logger.info(sequence.getValue().length() + ": " + sequence.getValue());
+
+		boolean isValid = DNAGraphValidator.isValidGraphForInputStrings(lines, graph);
+		logger.info("Is valid:" + isValid);
 	}
+
 }
