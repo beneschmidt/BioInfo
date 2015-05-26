@@ -7,7 +7,7 @@ public interface Node {
 
 	List<Edge> getEdges();
 
-	long getId();
+	Integer getId();
 
 	Edge getEdgeToNode(Node node);
 }

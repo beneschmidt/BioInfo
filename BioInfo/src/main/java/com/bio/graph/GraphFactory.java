@@ -8,13 +8,13 @@ import org.apache.logging.log4j.Logger;
 import com.bio.sequence.Sequence;
 
 public class GraphFactory {
-	
+
 	private static final Logger logger = LogManager.getLogger(GraphFactory.class);
 
 	public static DNAGraph createFromSequences(List<String> rawSequences) {
 		DNAGraph graph = new DNAGraph();
-		long i = 1l;
-		long errorCount=0;
+		Integer i = 1;
+		long errorCount = 0;
 		for (String nextLine : rawSequences) {
 			Sequence sequence = new Sequence(nextLine);
 			if (sequence.isValid()) {
@@ -24,8 +24,8 @@ public class GraphFactory {
 				errorCount++;
 			}
 		}
-		if(errorCount>0){
-			logger.warn(errorCount+" sequences were not valid!");
+		if (errorCount > 0) {
+			logger.warn(errorCount + " sequences were not valid!");
 		}
 		return graph;
 	}

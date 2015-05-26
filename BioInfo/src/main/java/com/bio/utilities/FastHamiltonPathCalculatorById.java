@@ -34,17 +34,17 @@ public class FastHamiltonPathCalculatorById<T extends Node, K extends Edge> impl
 	 * @return highest hamilton path
 	 */
 	private HamiltonPath<T, K> combine() {
-		List<List<Long>> fullList = new LinkedList<List<Long>>();
+		List<List<Integer>> fullList = new LinkedList<List<Integer>>();
 		for (T next : nodeMap.values()) {
-			List<Long> newNodes = new LinkedList<Long>();
+			List<Integer> newNodes = new LinkedList<Integer>();
 			newNodes.add(next.getId());
 			fullList.addAll(combine(newNodes));
 		}
 		logger.info("Number of paths: " + fullList.size());
 		int maxWeight = 0;
 		HamiltonPath<T, K> maxPath = null;
-		for (List<Long> list : fullList) {
-			HamiltonPath<T, K> seq = HamiltonPath.fromLongIds(list, nodeMap);
+		for (List<Integer> list : fullList) {
+			HamiltonPath<T, K> seq = HamiltonPath.fromIds(list, nodeMap);
 			if (seq.getWeight() > maxWeight) {
 				maxPath = seq;
 				maxWeight = seq.getWeight();
@@ -61,8 +61,8 @@ public class FastHamiltonPathCalculatorById<T extends Node, K extends Edge> impl
 	 * @param currentNodeIds
 	 * @return Set of Hamilton paths
 	 */
-	private List<List<Long>> combine(List<Long> currentNodeIds) {
-		List<List<Long>> fullList = new LinkedList<List<Long>>();
+	private List<List<Integer>> combine(List<Integer> currentNodeIds) {
+		List<List<Integer>> fullList = new LinkedList<List<Integer>>();
 		if (currentNodeIds.size() == nodeMap.size()) {
 			// if end is reached, return full list
 			fullList.add(currentNodeIds);
@@ -75,7 +75,7 @@ public class FastHamiltonPathCalculatorById<T extends Node, K extends Edge> impl
 			// if it's not in the current path, it may be used
 			if (!currentNodeIds.contains(e.getSuccessor().getId())) {
 				// add currently found node to a copied list of the current nodes
-				List<Long> currentNodesCopy = new LinkedList<Long>(currentNodeIds);
+				List<Integer> currentNodesCopy = new LinkedList<Integer>(currentNodeIds);
 				currentNodesCopy.add(e.getSuccessor().getId());
 				// recursive call for next node
 				fullList.addAll(combine(currentNodesCopy));

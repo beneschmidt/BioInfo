@@ -7,12 +7,12 @@ import com.bio.sequence.Sequence;
 
 public class SequenceNode implements Node {
 
-	private long id;
+	private Integer id;
 	private List<Edge> edges;
 	private List<Edge> incomingEdges;
 	private Sequence sequence;
 
-	public SequenceNode(long id) {
+	public SequenceNode(Integer id) {
 		edges = new LinkedList<Edge>();
 		incomingEdges = new LinkedList<Edge>();
 		this.id = id;
@@ -56,11 +56,11 @@ public class SequenceNode implements Node {
 		this.sequence = sequence;
 	}
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -41,18 +41,18 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		edges.add(edge);
 	}
 
-	/**
-	 * inserts a new sequence into the graph by checking all other Nodes. If there are overlaps to another node,
-	 * those nodes are linked with an edge. This can be done in both directions meaning both the new sequence is checked to all other nodes and the other way around.
-	 * The created Node and all created edges are then added to the graph's lists
-	 * @param sequence
-	 */
-	public void insertNewSequence(Sequence sequence, long id) {
+	public void insertNewSequence(Sequence sequence, Integer id) {
 		SequenceNode newNode = new SequenceNode(id);
 		newNode.setSequence(sequence);
 		insertNewNode(newNode);
 	}
 
+	/**
+	 * inserts a new node into the graph by checking all other Nodes. If it overlaps to another node or the other way around,
+	 * those nodes are linked with an edge. This can be done in both directions meaning both the new sequence is checked to all other nodes and the other way around.
+	 * The created Node and all created edges are then added to the graph's lists
+	 * @param sequence
+	 */
 	public void insertNewNode(SequenceNode newNode) {
 		for (SequenceNode otherNode : nodes) {
 			int firstOverlap = newNode.overlaps(otherNode);
