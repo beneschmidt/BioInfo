@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.bio.utilities.FileWriterHelper;
 import com.bio.utilities.HamiltonPathCalculator;
+import com.bio.utilities.IntegerHamiltonPathCalculator;
 
 public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {
 	private static final Logger logger = LogManager.getLogger(GreedySequenceAssembler.class);
@@ -26,8 +27,9 @@ public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {
 
 		while (!g.isCompletelyMerged()) {
 			logger.info("merge with current graph size: " + g.getNodes().size());
-			HamiltonPathCalculator<SequenceNode, DirectedEdge> p = new HamiltonPathCalculator<SequenceNode, DirectedEdge>(g.getNodes());
+			HamiltonPathCalculator<SequenceNode, DirectedEdge> p = new IntegerHamiltonPathCalculator<SequenceNode, DirectedEdge>(g.getNodes(), g.getNodeMap());
 			Set<HamiltonPath<SequenceNode, DirectedEdge>> permutation = p.calculateHamiltonPaths();
+			logger.info("number of hamilton paths: " + permutation.size());
 			HamiltonPath<SequenceNode, DirectedEdge> firstSeq = permutation.iterator().next();
 			g.mergeNodesOfEdge(firstSeq.getEdges().iterator().next());
 			String s = creator.toString();

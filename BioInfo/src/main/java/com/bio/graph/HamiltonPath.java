@@ -1,6 +1,8 @@
 package com.bio.graph;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -12,7 +14,7 @@ public class HamiltonPath<T extends Node, K extends Edge> implements Comparable<
 	private boolean valid;
 
 	/**
-	 * checkes the list of nodes for the edges between them and checks their valid state and the full edges weight (if valid)
+	 * checks the list of nodes for the edges between them and checks their valid state and the full edges weight (if valid)
 	 * @param nodes
 	 */
 	public HamiltonPath(List<T> nodes) {
@@ -31,6 +33,15 @@ public class HamiltonPath<T extends Node, K extends Edge> implements Comparable<
 				edges.add(edge);
 			}
 		}
+	}
+	
+	public static <T extends Node, K extends Edge> HamiltonPath<T,K> fromIds(List<Integer> nodeIds, Map<Integer, T> nodeMap){
+		List<T> nodes = new LinkedList<T>();
+		for(Integer nodeId: nodeIds){
+			nodes.add(nodeMap.get(nodeId));
+		}
+		
+		return new HamiltonPath<T, K>(nodes);
 	}
 
 	public List<T> getNodes() {

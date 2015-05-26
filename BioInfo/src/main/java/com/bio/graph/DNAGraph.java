@@ -2,7 +2,9 @@ package com.bio.graph;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.logging.log4j.LogManager;
@@ -127,5 +129,13 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 			node.getIncomingEdges().remove(edge);
 			this.getEdges().remove(edge);
 		}
+	}
+	
+	public Map<Integer, SequenceNode> getNodeMap(){
+		Map<Integer, SequenceNode> nodeMap = new TreeMap<>();
+		for(Node node : nodes){
+			nodeMap.put(Integer.parseInt(node.getId()+""), (SequenceNode)node);
+		}
+		return nodeMap;
 	}
 }
