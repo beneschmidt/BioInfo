@@ -9,4 +9,10 @@ public interface Graph<T extends Node, K extends Edge> {
 
 	SortedSet<K> getEdges();
 
+	/**
+	 * insert a new node into the graph and add all needed edges to and from the other nodes
+	 * @param newNode
+	 */
+	void insertNewNode(T newNode);
+
 }

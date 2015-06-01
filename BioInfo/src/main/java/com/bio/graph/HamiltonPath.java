@@ -6,6 +6,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * HamiltonPath implementation with nodes and edges. The nodes are a simple list that is sorted in its own way to specify the sequence of the nodes in the path.
+ * 
+ *
+ * @param <T>
+ * @param <K>
+ */
 public class HamiltonPath<T extends Node, K extends Edge> implements Comparable<HamiltonPath<T, K>> {
 
 	private List<T> nodes;
@@ -35,6 +42,12 @@ public class HamiltonPath<T extends Node, K extends Edge> implements Comparable<
 		}
 	}
 
+	/**
+	 * creates a hamilton path representation based on a list of node ids and a node map
+	 * @param nodeIds
+	 * @param nodeMap
+	 * @return HamiltonPath
+	 */
 	public static <T extends Node, K extends Edge> HamiltonPath<T, K> fromIds(List<Integer> nodeIds, Map<Integer, T> nodeMap) {
 		List<T> nodes = new LinkedList<T>();
 		for (Integer nodeId : nodeIds) {

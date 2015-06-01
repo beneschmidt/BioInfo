@@ -10,6 +10,12 @@ import com.bio.graph.Edge;
 import com.bio.graph.HamiltonPath;
 import com.bio.graph.Node;
 
+/**
+ * INFO: too slow, couldn't finish it once
+ *
+ * @param <T>
+ * @param <K>
+ */
 public class IntegerHamiltonPathCalculator<T extends Node, K extends Edge> implements HamiltonPathCalculator<T, K> {
 	private List<Integer> inputIdList;
 	private Map<Integer, T> nodeMap;

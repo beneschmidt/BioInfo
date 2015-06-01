@@ -1,7 +1,7 @@
 package com.bio.graph;
 
 /**
- * directed edge
+ * Interface for an edge in a graph. A weight is necessary.
  */
 public interface Edge {
 	

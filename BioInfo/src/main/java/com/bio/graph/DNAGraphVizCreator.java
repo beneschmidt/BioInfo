@@ -2,8 +2,6 @@ package com.bio.graph;
 
 /**
  * GraphViz creator class for directed DNA graphs
- * @author Benne
- *
  */
 public class DNAGraphVizCreator extends GraphVizCreator {
 

@@ -2,6 +2,9 @@ package com.bio.sequence;
 
 import com.bio.utilities.NumberUtils;
 
+/**
+ * the alphabet of a sequence
+ */
 public enum SequenceCharacter {
 	A,T,C,G;
 	

@@ -24,21 +24,22 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		edges = new TreeSet<DirectedEdge>();
 	}
 
-	public void addNode(SequenceNode node) {
-		nodes.add(node);
-	}
-
 	@Override
 	public List<SequenceNode> getNodes() {
 		return nodes;
 	}
 
+	@Override
 	public SortedSet<DirectedEdge> getEdges() {
 		return edges;
 	}
 
-	public void addEdge(DirectedEdge edge) {
+	private void addEdge(DirectedEdge edge) {
 		edges.add(edge);
+	}
+
+	public void addNode(SequenceNode node) {
+		nodes.add(node);
 	}
 
 	public void insertNewSequence(Sequence sequence, Integer id) {
@@ -48,11 +49,15 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 	}
 
 	/**
-	 * inserts a new node into the graph by checking all other Nodes. If it overlaps to another node or the other way around,
-	 * those nodes are linked with an edge. This can be done in both directions meaning both the new sequence is checked to all other nodes and the other way around.
-	 * The created Node and all created edges are then added to the graph's lists
+	 * inserts a new node into the graph by checking all other Nodes. If it
+	 * overlaps to another node or the other way around, those nodes are linked
+	 * with an edge. This can be done in both directions meaning both the new
+	 * sequence is checked to all other nodes and the other way around. The
+	 * created Node and all created edges are then added to the graph's lists
+	 * 
 	 * @param sequence
 	 */
+	@Override
 	public void insertNewNode(SequenceNode newNode) {
 		for (SequenceNode otherNode : nodes) {
 			int firstOverlap = newNode.overlaps(otherNode);
@@ -69,11 +74,13 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 
 	/**
 	 * creates a new edge between two Nodes with a given weight
+	 * 
 	 * @param firstNode
 	 * @param secondNode
 	 * @param weight
 	 */
-	private void insertNewEdge(SequenceNode firstNode, SequenceNode secondNode, int weight) {
+	private void insertNewEdge(SequenceNode firstNode, SequenceNode secondNode,
+			int weight) {
 		DirectedEdge newEdge = new DirectedEdge();
 		newEdge.setWeight(weight);
 		newEdge.setPredecessor(firstNode);
@@ -89,16 +96,28 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 	}
 
 	/**
-	 * merge the nodes of an edge (predecessor and successor) to a single node. All outgoing and incoming edges have to be remove and the node is reinserted
+	 * merge the nodes of an edge (predecessor and successor) to a single node.
+	 * All outgoing and incoming edges have to be remove and the node is
+	 * reinserted
+	 * 
 	 * @param edge
 	 */
 	public void mergeNodesOfEdge(DirectedEdge edge) {
 		SequenceNode node = mergeAndClear(edge);
-		logger.debug("Merge " + edge.getPredecessor().getId() + " and " + edge.getSuccessor().getId() + " to " + node.getSequence().getValue() + ", weight: "
+		logger.debug("Merge " + edge.getPredecessor().getId() + " and "
+				+ edge.getSuccessor().getId() + " to "
+				+ node.getSequence().getValue() + ", weight: "
 				+ edge.getWeight());
 		insertNewNode(node);
 	}
 
+	/**
+	 * merge the nodes of an edge to a single node. All surrounding edges
+	 * (incoming and outgoing including the edge between the nodes) are removed
+	 * 
+	 * @param edge
+	 * @return clean new Node without edges
+	 */
 	public SequenceNode mergeAndClear(DirectedEdge edge) {
 		SequenceNode pre = (SequenceNode) edge.getPredecessor();
 		nodes.remove(pre);
@@ -112,8 +131,11 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 	}
 
 	/**
-	 * clears all incoming and outgoing edges. First the incoming edges are cleared from the successors and then cleared here, next the outgoing edges are cleared
-	 * from the predecessors and then cleared here. Because we have a double linked list implementation of the edges this is important.
+	 * clears all incoming and outgoing edges. First the incoming edges are
+	 * cleared from the successors and then cleared here, next the outgoing
+	 * edges are cleared from the predecessors and then cleared here. Because we
+	 * have a double linked list implementation of the edges this is important.
+	 * 
 	 * @param sequenceNode
 	 */
 	private void clearEdges(SequenceNode sequenceNode) {
@@ -133,10 +155,14 @@ public class DNAGraph implements Graph<SequenceNode, DirectedEdge> {
 		sequenceNode.clearEdges();
 	}
 
+	/**
+	 * @return the nodes of graph as a map with the node ids as keys
+	 */
 	public Map<Integer, SequenceNode> getNodeMap() {
 		Map<Integer, SequenceNode> nodeMap = new TreeMap<>();
 		for (Node node : nodes) {
-			nodeMap.put(Integer.parseInt(node.getId() + ""), (SequenceNode) node);
+			nodeMap.put(Integer.parseInt(node.getId() + ""),
+					(SequenceNode) node);
 		}
 		return nodeMap;
 	}

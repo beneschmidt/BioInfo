@@ -10,7 +10,7 @@ import com.bio.graph.HamiltonPath;
 import com.bio.graph.Node;
 
 /**
- * creates full permutations of Nodes
+ * INFO: too slow, couldn't finish it once
  *
  * @param <T>
  */

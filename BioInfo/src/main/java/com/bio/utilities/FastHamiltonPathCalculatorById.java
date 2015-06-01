@@ -11,6 +11,15 @@ import com.bio.graph.Edge;
 import com.bio.graph.HamiltonPath;
 import com.bio.graph.Node;
 
+/**
+ * INFO: this is the currently fastest implementation we made. It creates hamilton paths with the ids of the node (lesser references on objects).
+ * A recursive approach is used, creating the permutations by adding all possible node ids after every valid permutation suffix. This means that for every
+ * suffix it is first checked if the current permutation is valid so far. If not it is discarded. Only following edges of a node are taken into consideration 
+ * for the next id to add, which reduces iterations.
+ *
+ * @param <T>
+ * @param <K>
+ */
 public class FastHamiltonPathCalculatorById<T extends Node, K extends Edge> implements HamiltonPathCalculator<T, K> {
 
 	private static final Logger logger = LogManager.getLogger(FastHamiltonPathCalculatorById.class);

@@ -1,5 +1,9 @@
 package com.bio.graph;
 
+/**
+ * Directed edge with an initial node and its successor. The predecessor is still included in this edge to specify where the edge comes from,
+ * still it is directed meaning it goes from the predecessor to the successor and not the other way around. 
+ */
 public class DirectedEdge implements Edge, Comparable<DirectedEdge> {
 
 	private Node predecessor;

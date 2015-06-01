@@ -1,11 +1,13 @@
 package com.bio.sequence;
 
+/**
+ * Simple DNA sequence. It encapsules a String value.
+ */
 public class Sequence {
 
 	private String value;
 
 	public Sequence() {
-
 	}
 
 	public Sequence(String value) {

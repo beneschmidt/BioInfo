@@ -10,6 +10,13 @@ import com.bio.graph.Edge;
 import com.bio.graph.HamiltonPath;
 import com.bio.graph.Node;
 
+/**
+ * similar to the fast hamiltonPath calculator by id, just that the path itself is based on integer values but full objects which is slower than the id
+ * implementation because of the references that need to be copied.
+ *
+ * @param <T>
+ * @param <K>
+ */
 public class FastHamiltonPathCalculatorByNode<T extends Node, K extends Edge> implements HamiltonPathCalculator<T, K> {
 	private Map<Integer, T> nodeMap;
 
