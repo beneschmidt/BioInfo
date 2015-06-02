@@ -11,7 +11,7 @@ public class Sequence {
 	}
 
 	public Sequence(String value) {
-		this.value = value;
+		this.value = value.trim();
 	}
 
 	public String getValue() {
@@ -19,7 +19,7 @@ public class Sequence {
 	}
 
 	public void setValue(String value) {
-		this.value = value;
+		this.value = value.trim();
 	}
 
 	/**
