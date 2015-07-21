@@ -15,12 +15,23 @@ public abstract class StateChances {
 	protected Map<Integer, List<Double>> stateLists;
 	protected List<State> states;
 
-	public StateChances(State... possibleStates) {
+	public StateChances(List<State> possibleStates) {
 		stateLists = new TreeMap<>();
 		states = new LinkedList<>();
 		for (State state : possibleStates) {
 			stateLists.put(state.getId(), new LinkedList<Double>());
 			states.add(state);
+		}
+	}
+
+	public void initStatesWithZeroChanceExceptFirst() {
+		// first is defined as initState with 100% chance
+		for (int i = 0; i < states.size(); i++) {
+			if (i == 0) {
+				addNextChanceForState(states.get(i), 1.0);
+			} else {
+				addNextChanceForState(states.get(i), 0.0);
+			}
 		}
 	}
 
@@ -30,6 +41,10 @@ public abstract class StateChances {
 
 	public void addNextChanceForState(State state, double chance) {
 		getListForState(state).add(chance);
+	}
+
+	public void addNextChanceForState(int id, double chance) {
+		stateLists.get(id).add(chance);
 	}
 
 	public double getStateChanceAtPosition(State state, int position) {

@@ -3,7 +3,7 @@ package com.bio.ueb3;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class State {
+public class State {
 
 	protected int id;
 	protected String alias;

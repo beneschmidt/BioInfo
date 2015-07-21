@@ -1,8 +1,10 @@
 package com.bio.ueb3;
 
+import java.util.List;
+
 public class LogStateChances extends StateChances {
 
-	public LogStateChances(State... possibleStates) {
+	public LogStateChances(List<State> possibleStates) {
 		super(possibleStates);
 	}
 

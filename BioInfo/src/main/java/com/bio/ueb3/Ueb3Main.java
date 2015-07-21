@@ -5,13 +5,11 @@ public class Ueb3Main {
 	public static void main(String[] args) {
 
 		// init the states
-		StateInitializer initializer = new StateInitializer();
+		StateInitializer initializer = new StateInitializer("resources/init.txt");
 
 		// init the state chances including an initial chances to be selected
-		StateChances chances = new LogStateChances(initializer.getInitialState(), initializer.getFairDice(), initializer.getUnfairDice());
-		chances.addNextChanceForState(initializer.getInitialState(), 1.0);
-		chances.addNextChanceForState(initializer.getFairDice(), 0.0);
-		chances.addNextChanceForState(initializer.getUnfairDice(), 0.0);
+		StateChances chances = new NormalStateChances(initializer.getStates());
+		chances.initStatesWithZeroChanceExceptFirst();
 
 		ConfigFile configFile = new ConfigFile("resources/wuerfel.txt");
 
