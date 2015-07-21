@@ -28,12 +28,8 @@ public class StateChances {
 		return stateLists.get(state.getId());
 	}
 
-	public void addNextChanceForState(State state, Double chance) {
+	public void addNextChanceForState(State state, double chance) {
 		getListForState(state).add(chance);
-	}
-
-	public double getChanceForTransition(State from, State to) {
-		return from.getChanceForTransition(to);
 	}
 
 	public double getStateChanceAtPosition(State state, int position) {
@@ -41,7 +37,7 @@ public class StateChances {
 	}
 
 	public State getStateWithMaxChanceAtPosition(int position) {
-		double max = 0.0;
+		double max = Double.NEGATIVE_INFINITY;
 		State maxState = null;
 		for (State state : states) {
 			double next = getStateChanceAtPosition(state, position);
@@ -54,16 +50,16 @@ public class StateChances {
 	}
 
 	/**
-	 * MAX(State chance at position * TransitionChance to the target state) for all states TO the given target state
+	 * MAX(State chance at position + LOG(TransitionChance to the target state)) for all states TO the given target state
 	 * @param targetState
 	 * @param position
 	 * @return max value over all possible transitions
 	 */
 	public double getMForTargetState(State targetState, int position) {
-		double max = 0;
+		double max = Double.NEGATIVE_INFINITY;
 		for (State state : states) {
-			logger.info("From " + state.getId() + " to " + targetState.getId() + ": " + getStateChanceAtPosition(state, position) + " * "
-					+ state.getChanceForTransition(targetState));
+			logger.info("From " + state.getId() + " to " + targetState.getId() + ": " + getStateChanceAtPosition(state, position) + " + "
+					+ state.getLogChanceForTransition(targetState));
 			double nextChance = getStateChanceAtPosition(state, position) * state.getChanceForTransition(targetState);
 			if (nextChance > max) {
 				max = nextChance;
@@ -73,7 +69,9 @@ public class StateChances {
 	}
 
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
-		return state.getChanceForEye(eyeNumber) * getMForTargetState(state, position);
+		double m = getMForTargetState(state, position);
+		logger.info(state.getChanceForEye(eyeNumber) + " + "+m);
+		return state.getLogChanceForEye(eyeNumber) * m;
 	}
 
 	public List<State> getStates() {

@@ -32,10 +32,11 @@ public class Viterbi {
 
 	public String calculate() {
 		StringBuilder path = new StringBuilder();
-		for (int i = 0; i < numberSequence.length(); i++) {
+		for (int i = 0; i < 10; i++) {
 			int nextValue = Integer.parseInt(numberSequence.charAt(i) + "");
 			logger.info("[NEXT VALUE] " + nextValue);
 
+			// check the chances for every state and update their state list
 			for (State state : chances.getStates()) {
 				double nextChance = chances.getNextChanceForState(state, nextValue, i);
 				chances.addNextChanceForState(state, nextChance);
