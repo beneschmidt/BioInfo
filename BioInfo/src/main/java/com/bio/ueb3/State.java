@@ -6,12 +6,17 @@ import java.util.TreeMap;
 public abstract class State {
 
 	protected int id;
+	protected String alias;
 	protected Map<Integer, Double> transitions;
 	protected double[] chances;
 
-	public State(int id, double[] chances) {
+	public State(int id, double[] chances, String alias) {
+		if (chances.length != 6) {
+			throw new RuntimeException("Dices always have 6 sides");
+		}
 		this.id = id;
 		this.chances = chances;
+		this.alias = alias;
 		transitions = new TreeMap<Integer, Double>();
 	}
 
@@ -39,6 +44,14 @@ public abstract class State {
 		this.chances = chances;
 	}
 
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
 	/**
 	 * @param toState
 	 * @param transition
@@ -53,8 +66,12 @@ public abstract class State {
 		return addTransition(this, transition);
 	}
 
-	public double getChanceForTransition(Dice dice) {
+	public double getChanceForTransition(State dice) {
 		return transitions.get(dice.getId());
+	}
+
+	public double getChanceForEye(int eyeNumber) {
+		return chances[eyeNumber - 1];
 	}
 
 }
