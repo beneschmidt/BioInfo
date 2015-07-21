@@ -21,9 +21,9 @@ public abstract class State {
 		this.alias = alias;
 		transitions = new TreeMap<Integer, Double>();
 		logTransitions = new TreeMap<Integer, Double>();
-		
+
 		logChances = new double[chances.length];
-		for(int i = 0; i < logChances.length; i++){
+		for (int i = 0; i < logChances.length; i++) {
 			logChances[i] = Math.log10(chances[i]);
 		}
 	}
@@ -51,7 +51,7 @@ public abstract class State {
 	 */
 	public State addTransition(State toState, double transition) {
 		transitions.put(toState.getId(), transition);
-		logTransitions.put(toState.getId(), Math.log10(transition));
+		logTransitions.put(toState.getId(), transition);
 		return this;
 	}
 
@@ -62,15 +62,15 @@ public abstract class State {
 	public double getChanceForTransition(State state) {
 		return transitions.get(state.getId());
 	}
-	
-	public double getLogChanceForTransition(State state){
+
+	public double getLogChanceForTransition(State state) {
 		return logTransitions.get(state.getId());
 	}
 
 	public double getChanceForEye(int eyeNumber) {
 		return chances[eyeNumber - 1];
 	}
-	
+
 	public double getLogChanceForEye(int eyeNumber) {
 		return logChances[eyeNumber - 1];
 	}

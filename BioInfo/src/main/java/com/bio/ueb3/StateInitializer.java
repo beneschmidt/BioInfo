@@ -1,10 +1,12 @@
 package com.bio.ueb3;
 
+
 /**
  * Initializes all states with their possible chances and their transition possibilities
  */
 public class StateInitializer {
 	private static final double FAIR_CHANCE = 1.0 / 6.0;
+	private static final double ONE_TENTH = 0.1;
 
 	private final Dice fairDice;
 	private final Dice unfairDice;
@@ -13,7 +15,7 @@ public class StateInitializer {
 	public StateInitializer() {
 		initialState = new InitialState();
 		fairDice = new Dice(1, new double[] { FAIR_CHANCE, FAIR_CHANCE, FAIR_CHANCE, FAIR_CHANCE, FAIR_CHANCE, FAIR_CHANCE }, "F");
-		unfairDice = new Dice(2, new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.5 }, "U");
+		unfairDice = new Dice(2, new double[] { ONE_TENTH, ONE_TENTH, ONE_TENTH, ONE_TENTH, ONE_TENTH, 0.5 }, "U");
 
 		// initial state can only get to fair or unfair dice state, both with 50% chance
 		initialState.addTransitionToSelf(0).addTransition(fairDice, 0.5).addTransition(unfairDice, 0.5);

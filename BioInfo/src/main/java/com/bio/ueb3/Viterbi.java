@@ -32,7 +32,7 @@ public class Viterbi {
 
 	public String calculate() {
 		StringBuilder path = new StringBuilder();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < numberSequence.length(); i++) {
 			int nextValue = Integer.parseInt(numberSequence.charAt(i) + "");
 			logger.info("[NEXT VALUE] " + nextValue);
 
@@ -40,10 +40,14 @@ public class Viterbi {
 			for (State state : chances.getStates()) {
 				double nextChance = chances.getNextChanceForState(state, nextValue, i);
 				chances.addNextChanceForState(state, nextChance);
-				logger.info("State Chances of " + state.getId() + ": " + chances.getListForState(state));
 			}
 
+			logger.info("==================");
 			path.append(chances.getStateWithMaxChanceAtPosition(i + 1).getAlias());
+		}
+
+		for (State state : chances.getStates()) {
+			logger.info("State Chances of " + state.getAlias() + ": " + chances.getListForState(state));
 		}
 		return path.toString();
 	}
