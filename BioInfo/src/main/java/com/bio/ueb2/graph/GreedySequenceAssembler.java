@@ -3,8 +3,8 @@ package com.bio.ueb2.graph;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.bio.common.FileWriterHelper;
 import com.bio.ueb2.utilities.FastHamiltonPathCalculatorById;
-import com.bio.ueb2.utilities.FileWriterHelper;
 import com.bio.ueb2.utilities.HamiltonPathCalculator;
 
 public class GreedySequenceAssembler implements SequenceAssembler<DNAGraph> {

@@ -1,4 +1,4 @@
-package com.bio.ueb2.utilities;
+package com.bio.common;
 
 import java.io.IOException;
 import java.nio.file.Files;

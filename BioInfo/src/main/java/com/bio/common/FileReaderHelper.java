@@ -1,4 +1,4 @@
-package com.bio.ueb2.utilities;
+package com.bio.common;
 
 import java.nio.charset.Charset;
 import java.nio.file.Files;
