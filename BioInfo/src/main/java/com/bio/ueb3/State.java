@@ -24,8 +24,12 @@ public class State {
 
 		logChances = new double[chances.length];
 		for (int i = 0; i < logChances.length; i++) {
-			logChances[i] = Math.log10(chances[i]);
+			logChances[i] = getLog(chances[i]);
 		}
+	}
+
+	private double getLog(double value) {
+		return Math.log(value);
 	}
 
 	public int getId() {
@@ -51,7 +55,7 @@ public class State {
 	 */
 	public State addTransition(State toState, double transition) {
 		transitions.put(toState.getId(), transition);
-		logTransitions.put(toState.getId(), transition);
+		logTransitions.put(toState.getId(), getLog(transition));
 		return this;
 	}
 

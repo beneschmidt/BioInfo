@@ -17,10 +17,9 @@ public abstract class StateChances {
 
 	public StateChances(List<State> possibleStates) {
 		stateLists = new TreeMap<>();
-		states = new LinkedList<>();
+		states = possibleStates;
 		for (State state : possibleStates) {
 			stateLists.put(state.getId(), new LinkedList<Double>());
-			states.add(state);
 		}
 	}
 
@@ -52,10 +51,11 @@ public abstract class StateChances {
 	}
 
 	public State getStateWithMaxChanceAtPosition(int position) {
-		double max = Double.MIN_VALUE;
+		double max = Double.NEGATIVE_INFINITY;
 		State maxState = null;
 		for (State state : states) {
 			double next = getStateChanceAtPosition(state, position);
+			logger.info(next + "> " + max + ", " + (next > max));
 			if (next > max) {
 				max = next;
 				maxState = state;
@@ -78,7 +78,7 @@ public abstract class StateChances {
 	 * @param position
 	 * @return max value over all possible transitions
 	 */
-	public abstract double getMForTargetState(State targetState, int position);
+	public abstract double getMaxM(State targetState, int position);
 
 	public abstract double getNextChanceForState(State state, int eyeNumber, int position);
 
