@@ -18,6 +18,10 @@ public class StateInitializer {
 	public StateInitializer(String fileName) {
 		states = new LinkedList<State>();
 
+		initFromFile(fileName);
+	}
+
+	private void initFromFile(String fileName) {
 		List<String> rows = FileReaderHelper.readFile(fileName);
 		boolean diceInitReady = false;
 

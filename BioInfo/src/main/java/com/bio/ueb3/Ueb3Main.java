@@ -8,7 +8,7 @@ public class Ueb3Main {
 		StateInitializer initializer = new StateInitializer("resources/init.txt");
 
 		// init the state chances including an initial chances to be selected
-		StateChances chances = new NormalStateChances(initializer.getStates());
+		ViterbiChanceHandler chances = new LogViterbiChanceHandler(initializer.getStates());
 		chances.initStatesWithZeroChanceExceptFirst();
 
 		ConfigFile configFile = new ConfigFile("resources/wuerfel.txt");

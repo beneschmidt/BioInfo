@@ -2,9 +2,14 @@ package com.bio.ueb3;
 
 import java.util.List;
 
-public class NormalStateChances extends StateChances {
+/**
+ * Handles chances and their calculation with normal double values
+ * @author Benne
+ *
+ */
+public class NormalViterbiChanceHandler extends ViterbiChanceHandler {
 
-	public NormalStateChances(List<State> possibleStates) {
+	public NormalViterbiChanceHandler(List<State> possibleStates) {
 		super(possibleStates);
 	}
 

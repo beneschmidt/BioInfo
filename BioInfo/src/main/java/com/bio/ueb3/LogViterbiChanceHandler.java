@@ -2,9 +2,9 @@ package com.bio.ueb3;
 
 import java.util.List;
 
-public class LogStateChances extends StateChances {
+public class LogViterbiChanceHandler extends ViterbiChanceHandler {
 
-	public LogStateChances(List<State> possibleStates) {
+	public LogViterbiChanceHandler(List<State> possibleStates) {
 		super(possibleStates);
 	}
 

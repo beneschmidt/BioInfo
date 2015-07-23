@@ -7,9 +7,13 @@ public class Viterbi {
 	private static final Logger logger = LogManager.getLogger(Viterbi.class);
 
 	private String numberSequence;
-	private StateChances chances;
+	private ViterbiChanceHandler chances;
 
-	public Viterbi(String numberSequence, StateChances chances) {
+	/**
+	 * @param numberSequence
+	 * @param chances special handler for Viterbi chance calculations
+	 */
+	public Viterbi(String numberSequence, ViterbiChanceHandler chances) {
 		this.numberSequence = numberSequence;
 		this.chances = chances;
 	}
@@ -22,14 +26,18 @@ public class Viterbi {
 		this.numberSequence = numberSequence;
 	}
 
-	public StateChances getChances() {
+	public ViterbiChanceHandler getChances() {
 		return chances;
 	}
 
-	public void setChances(StateChances chances) {
+	public void setChances(ViterbiChanceHandler chances) {
 		this.chances = chances;
 	}
 
+	/**
+	 * calculate all chances of all states to occur at every possible position
+	 * @return calculated path with max chances at every position
+	 */
 	public String calculate() {
 		StringBuilder path = new StringBuilder();
 		for (int i = 0; i < numberSequence.length(); i++) {
@@ -43,6 +51,7 @@ public class Viterbi {
 			}
 
 			logger.info("==================");
+			// append the max chance of the current position to the path
 			path.append(chances.getStateWithMaxChanceAtPosition(i + 1).getAlias());
 		}
 

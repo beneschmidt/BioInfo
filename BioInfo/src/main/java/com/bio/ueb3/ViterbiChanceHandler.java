@@ -8,14 +8,14 @@ import java.util.TreeMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class StateChances {
+public abstract class ViterbiChanceHandler {
 
-	protected static final Logger logger = LogManager.getLogger(StateChances.class);
+	protected static final Logger logger = LogManager.getLogger(ViterbiChanceHandler.class);
 
 	protected Map<Integer, List<Double>> stateLists;
 	protected List<State> states;
 
-	public StateChances(List<State> possibleStates) {
+	public ViterbiChanceHandler(List<State> possibleStates) {
 		stateLists = new TreeMap<>();
 		states = possibleStates;
 		for (State state : possibleStates) {
@@ -23,14 +23,14 @@ public abstract class StateChances {
 		}
 	}
 
+	/**
+	 * there should be an initial state that has 100% to start with. This is by definition the first item
+	 */
 	public void initStatesWithZeroChanceExceptFirst() {
+		addNextChanceForState(states.get(0), 1.0);
 		// first is defined as initState with 100% chance
-		for (int i = 0; i < states.size(); i++) {
-			if (i == 0) {
-				addNextChanceForState(states.get(i), 1.0);
-			} else {
-				addNextChanceForState(states.get(i), 0.0);
-			}
+		for (int i = 1; i < states.size(); i++) {
+			addNextChanceForState(states.get(i), 0.0);
 		}
 	}
 
@@ -53,6 +53,10 @@ public abstract class StateChances {
 	public State getStateWithMaxChanceAtPosition(int position) {
 		double max = Double.NEGATIVE_INFINITY;
 		State maxState = null;
+		//		List<State> reverseList = new LinkedList<State>(states);
+		//		Collections.copy(reverseList, states);
+		//		Collections.reverse(reverseList);
+		//		for (State state : reverseList) {
 		for (State state : states) {
 			double next = getStateChanceAtPosition(state, position);
 			logger.info(next + "> " + max + ", " + (next > max));
