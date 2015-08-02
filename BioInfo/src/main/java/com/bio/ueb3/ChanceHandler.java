@@ -8,14 +8,14 @@ import java.util.TreeMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class ViterbiChanceHandler {
+public abstract class ChanceHandler {
 
-	protected static final Logger logger = LogManager.getLogger(ViterbiChanceHandler.class);
+	protected static final Logger logger = LogManager.getLogger(ChanceHandler.class);
 
 	protected Map<Integer, List<Double>> stateLists;
 	protected List<State> states;
 
-	public ViterbiChanceHandler(List<State> possibleStates) {
+	public ChanceHandler(List<State> possibleStates) {
 		stateLists = new TreeMap<>();
 		states = possibleStates;
 		for (State state : possibleStates) {
@@ -77,12 +77,11 @@ public abstract class ViterbiChanceHandler {
 	}
 
 	/**
-	 * MAX(State chance at position + LOG(TransitionChance to the target state)) for all states TO the given target state
 	 * @param targetState
 	 * @param position
-	 * @return max value over all possible transitions
+	 * @return next value calculated with the M value (sum or multiplication)
 	 */
-	public abstract double getMaxM(State targetState, int position);
+	public abstract double getNextMCalculation(State targetState, int position);
 
 	public abstract double getNextChanceForState(State state, int eyeNumber, int position);
 

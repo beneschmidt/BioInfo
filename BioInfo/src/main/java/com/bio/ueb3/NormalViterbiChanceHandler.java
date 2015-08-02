@@ -7,7 +7,7 @@ import java.util.List;
  * @author Benne
  *
  */
-public class NormalViterbiChanceHandler extends ViterbiChanceHandler {
+public class NormalViterbiChanceHandler extends ChanceHandler {
 
 	public NormalViterbiChanceHandler(List<State> possibleStates) {
 		super(possibleStates);
@@ -19,7 +19,7 @@ public class NormalViterbiChanceHandler extends ViterbiChanceHandler {
 	 * @param position
 	 * @return max value over all possible transitions
 	 */
-	public double getMaxM(State targetState, int position) {
+	public double getNextMCalculation(State targetState, int position) {
 		double max = Double.NEGATIVE_INFINITY;
 		for (State state : states) {
 			logger.info("From " + state.getId() + " to " + targetState.getId() + ": " + getStateChanceAtPosition(state, position) + " * "
@@ -33,7 +33,7 @@ public class NormalViterbiChanceHandler extends ViterbiChanceHandler {
 	}
 
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
-		double m = getMaxM(state, position);
+		double m = getNextMCalculation(state, position);
 		double calculatedChance = state.getChanceForEye(eyeNumber) * m;
 		logger.info("CHANCE TAKEN: " + m + " * " + state.getChanceForEye(eyeNumber) + " = " + calculatedChance);
 		return calculatedChance;

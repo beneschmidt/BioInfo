@@ -2,7 +2,7 @@ package com.bio.ueb3;
 
 import java.util.List;
 
-public class LogViterbiChanceHandler extends ViterbiChanceHandler {
+public class LogViterbiChanceHandler extends ChanceHandler {
 
 	public LogViterbiChanceHandler(List<State> possibleStates) {
 		super(possibleStates);
@@ -14,7 +14,7 @@ public class LogViterbiChanceHandler extends ViterbiChanceHandler {
 	 * @param position at which the last state is saved 
 	 * @return max value over all possible transitions
 	 */
-	public double getMaxM(State toState, int position) {
+	public double getNextMCalculation(State toState, int position) {
 		double max = Double.NEGATIVE_INFINITY;
 		for (State fromState : states) {
 			logger.info("From " + fromState.getId() + " to " + toState.getId() + ": " + getStateChanceAtPosition(fromState, position) + " + "
@@ -33,7 +33,7 @@ public class LogViterbiChanceHandler extends ViterbiChanceHandler {
 	 * und des maximalen M-Werts aller States, aus denen der Wuerfel uebergegangen sein kann (Transition)
 	 */
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
-		double maxM = getMaxM(state, position);
+		double maxM = getNextMCalculation(state, position);
 		logger.info(state.getChanceForEye(eyeNumber) + " + " + maxM);
 
 		// naechste Chance = maxM + logarithmische Chance pro fuer Augenwurf

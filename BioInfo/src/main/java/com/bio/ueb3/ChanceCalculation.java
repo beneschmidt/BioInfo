@@ -3,34 +3,34 @@ package com.bio.ueb3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Viterbi {
-	private static final Logger logger = LogManager.getLogger(Viterbi.class);
+/**
+ * generic chance calculation for algorithmus that go from first char to the last (forward). It's pretty much straight forward in these case.
+ * You have a sequence of numbers and a  ChanceHandler that gives the correct calculation at every point of the sequence. The calculation that is done here
+ * is always the same: iterate through the sequence and calculate all the possible chances to "be at in the current state" for every given state. This calculation
+ * is done by the given ChanceHandler, so you just have to call it. After calculation at a point in the sequence, the highest chance of all chances at the current position
+ * is taken and added to the current path.
+ *
+ */
+public class ChanceCalculation {
+	private static final Logger logger = LogManager.getLogger(ChanceCalculation.class);
 
+	private ChanceHandler chances;
 	private String numberSequence;
-	private ViterbiChanceHandler chances;
 
 	/**
 	 * @param numberSequence
 	 * @param chances special handler for Viterbi chance calculations
 	 */
-	public Viterbi(String numberSequence, ViterbiChanceHandler chances) {
+	public ChanceCalculation(String numberSequence, ChanceHandler chances) {
 		this.numberSequence = numberSequence;
 		this.chances = chances;
 	}
 
-	public String getNumberSequence() {
-		return numberSequence;
-	}
-
-	public void setNumberSequence(String numberSequence) {
-		this.numberSequence = numberSequence;
-	}
-
-	public ViterbiChanceHandler getChances() {
+	public ChanceHandler getChances() {
 		return chances;
 	}
 
-	public void setChances(ViterbiChanceHandler chances) {
+	public void setChances(ChanceHandler chances) {
 		this.chances = chances;
 	}
 
