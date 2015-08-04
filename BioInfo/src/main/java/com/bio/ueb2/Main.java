@@ -21,8 +21,8 @@ public class Main {
 	private static final Logger logger = LogManager.getLogger(Main.class);
 
 	public static void main(String[] args) {
-		List<String> lines = FileReaderHelper.readFile("resources/frag.dat");
-		DNAGraph graph = GraphFactory.createFromSequences(lines.subList(0, 16));
+		List<String> lines = FileReaderHelper.readFile("resources/frag2.dat");
+		DNAGraph graph = GraphFactory.createFromSequences(lines);
 		String s2 = "";
 		for (String n : lines) {
 			s2 += n;
