@@ -91,14 +91,13 @@
 					<archive>
 						<manifest>
 							<!-- Jar file entry point -->
-							<mainClass>com.bio.Main</mainClass>
+							<mainClass>com.bio.ueb2.Main</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 					</archive>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 	<dependencies>
