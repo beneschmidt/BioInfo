@@ -1,4 +1,4 @@
-package com.bio.ueb3;
+package com.bio.ueb3.algorithms;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,10 +8,18 @@ import java.util.TreeMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.bio.ueb3.State;
+
+/**
+ * Chance handler that gives the direction of how to work with the different possible chance calculations.
+ * For every possible algorithm inherited from here, the steps are the same. The final path taken is always the concatenation of states with
+ * the highest chance at a position. 
+ */
 public abstract class ChanceHandler {
 
 	protected static final Logger logger = LogManager.getLogger(ChanceHandler.class);
 
+	/** map with all the chances for every possible state. A chance list can be accessed by the ID of the state */
 	protected Map<Integer, List<Double>> stateLists;
 	protected List<State> states;
 
@@ -24,7 +32,7 @@ public abstract class ChanceHandler {
 	}
 
 	/**
-	 * there should be an initial state that has 100% to start with. This is by definition the first item
+	 * there should be an initial state that has 100% chance to start with. This is by definition the first item in the given list
 	 */
 	public void initStatesWithZeroChanceExceptFirst() {
 		addNextChanceForState(states.get(0), 1.0);
@@ -83,6 +91,14 @@ public abstract class ChanceHandler {
 	 */
 	public abstract double getNextMCalculation(State targetState, int position);
 
+	/**
+	 * calculate the next chance for a given state and an eye number. For usage of the last state, the current position
+	 * is also given
+	 * @param state
+	 * @param eyeNumber
+	 * @param position
+	 * @return the next chance
+	 */
 	public abstract double getNextChanceForState(State state, int eyeNumber, int position);
 
 }

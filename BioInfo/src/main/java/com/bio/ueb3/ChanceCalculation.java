@@ -3,6 +3,8 @@ package com.bio.ueb3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.bio.ueb3.algorithms.ChanceHandler;
+
 /**
  * generic chance calculation for algorithmus that go from first char to the last (forward). It's pretty much straight forward in these case.
  * You have a sequence of numbers and a  ChanceHandler that gives the correct calculation at every point of the sequence. The calculation that is done here

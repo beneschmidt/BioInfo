@@ -1,6 +1,8 @@
-package com.bio.ueb3;
+package com.bio.ueb3.algorithms;
 
 import java.util.List;
+
+import com.bio.ueb3.State;
 
 public class LogViterbiChanceHandler extends ChanceHandler {
 

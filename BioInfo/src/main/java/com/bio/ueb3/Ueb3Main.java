@@ -1,5 +1,7 @@
 package com.bio.ueb3;
 
+import com.bio.ueb3.algorithms.ChanceHandler;
+
 public class Ueb3Main {
 
 	public static void main(String[] args) {

@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.bio.common.ConsoleReader;
+import com.bio.ueb3.algorithms.ChanceHandler;
+import com.bio.ueb3.algorithms.ForwardProbability;
+import com.bio.ueb3.algorithms.LogViterbiChanceHandler;
+import com.bio.ueb3.algorithms.NormalViterbiChanceHandler;
 
 public class AlgorithmMenu {
 
@@ -39,9 +43,9 @@ public class AlgorithmMenu {
 					case LOG_VITERBI:
 						return new LogViterbiChanceHandler(possibleStates);
 					case NORMAL_FB:
-						return new ForwardProbability(possibleStates);
+						return ForwardProbability.withoutFactor(possibleStates);
 					case FACTOR_FB:
-						return new ForwardProbabilityWithFactor(possibleStates);
+						return ForwardProbability.withFactor(possibleStates, 6);
 					default:
 						// default case resets the valid flag to redo the menu
 						System.out.println(selection + " is not a valid selection");

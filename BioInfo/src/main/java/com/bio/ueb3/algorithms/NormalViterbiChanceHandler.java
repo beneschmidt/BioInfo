@@ -1,27 +1,39 @@
-package com.bio.ueb3;
+package com.bio.ueb3.algorithms;
 
 import java.util.List;
 
-public class ForwardProbabilityWithFactor extends ChanceHandler {
+import com.bio.ueb3.State;
 
-	public ForwardProbabilityWithFactor(List<State> possibleStates) {
+/**
+ * Handles chances and their calculation with normal double values
+ * @author Benne
+ *
+ */
+public class NormalViterbiChanceHandler extends ChanceHandler {
+
+	public NormalViterbiChanceHandler(List<State> possibleStates) {
 		super(possibleStates);
 	}
 
-	@Override
+	/**
+	 * MAX(State chance at position * (TransitionChance to the target state)) for all states TO the given target state
+	 * @param targetState
+	 * @param position
+	 * @return max value over all possible transitions
+	 */
 	public double getNextMCalculation(State targetState, int position) {
-		double sum = 0;
+		double max = Double.NEGATIVE_INFINITY;
 		for (State state : states) {
 			logger.info("From " + state.getId() + " to " + targetState.getId() + ": " + getStateChanceAtPosition(state, position) + " * "
 					+ state.getChanceForTransition(targetState));
 			double nextChance = getStateChanceAtPosition(state, position) * state.getChanceForTransition(targetState);
-			sum += nextChance;
+			if (nextChance > max) {
+				max = nextChance;
+			}
 		}
-		return sum;
+		return max;
 	}
 
-	// TODO implement factor
-	@Override
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
 		double m = getNextMCalculation(state, position);
 		double calculatedChance = state.getChanceForEye(eyeNumber) * m;
