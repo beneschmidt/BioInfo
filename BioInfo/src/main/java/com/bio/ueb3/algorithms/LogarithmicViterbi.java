@@ -7,16 +7,16 @@ import org.apache.logging.log4j.Logger;
 
 import com.bio.ueb3.State;
 
-public class LogViterbiChanceHandler extends ChanceHandler {
+public class LogarithmicViterbi extends ChanceCalculator {
 
-	private static final Logger logger = LogManager.getLogger(LogViterbiChanceHandler.class);
+	private static final Logger logger = LogManager.getLogger(LogarithmicViterbi.class);
 
-	public LogViterbiChanceHandler(List<State> possibleStates) {
+	public LogarithmicViterbi(List<State> possibleStates) {
 		super(possibleStates);
 	}
 
 	/**
-	 * MAX(State chance at position + LOG(TransitionChance to the target state)) for all states TO the given target state
+	 * MAX(State chance at position + LOG(TransitionChance to the target state)) of all states TO the given target state
 	 * @param toState
 	 * @param position at which the last state is saved 
 	 * @return max value over all possible transitions
@@ -26,7 +26,7 @@ public class LogViterbiChanceHandler extends ChanceHandler {
 		for (State fromState : states) {
 			logger.debug("From " + fromState.getId() + " to " + toState.getId() + ": " + getStateChanceAtPosition(fromState, position) + " + "
 					+ fromState.getLogChanceForTransition(toState));
-			// naechstes M = zuvorige Chance des aktuellen States + logarithmische Uebergangs-WSK
+			// next M = last chance of current state + logarithmic transition chance
 			double nextChance = getStateChanceAtPosition(fromState, position) + fromState.getLogChanceForTransition(toState);
 			if (nextChance > max) {
 				max = nextChance;
@@ -36,8 +36,7 @@ public class LogViterbiChanceHandler extends ChanceHandler {
 	}
 
 	/**
-	 * hier wird die naechste Chance fuer einen bestimmten State berechnet. Dieser berechnet sich aus der Chance des gewuerfelten Auges
-	 * und des maximalen M-Werts aller States, aus denen der Wuerfel uebergegangen sein kann (Transition)
+	 * calculation: max(m) + log chance for dice roll
 	 */
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
 		double maxM = getNextMCalculation(state, position);

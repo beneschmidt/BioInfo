@@ -7,7 +7,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.bio.ueb3.State;
 
-public class ForwardProbability extends ChanceHandler {
+/**
+ * forward probability contains two possible methods to do this:<br>
+ * 1. default calucalation<br>
+ * 2. calculation with factor<br>
+ * The factor can be defined. If it's a default calculation, the factor is 1
+ */
+public class ForwardProbability extends ChanceCalculator {
 
 	private static final Logger logger = LogManager.getLogger(ForwardProbability.class);
 
@@ -36,6 +42,9 @@ public class ForwardProbability extends ChanceHandler {
 		return new ForwardProbability(possibleStates, 1);
 	}
 
+	/**
+	 * Sum over all states with the given calculation: SUM(last chance of state * transition from state)
+	 */
 	@Override
 	public double getNextMCalculation(State targetState, int position) {
 		double sum = 0;
@@ -48,6 +57,9 @@ public class ForwardProbability extends ChanceHandler {
 		return sum;
 	}
 
+	/**
+	 * calculation: m * chance for dice roll * factor
+	 */
 	@Override
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
 		double m = getNextMCalculation(state, position);

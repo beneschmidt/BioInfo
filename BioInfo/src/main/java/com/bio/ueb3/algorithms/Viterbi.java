@@ -12,20 +12,21 @@ import com.bio.ueb3.State;
  * @author Benne
  *
  */
-public class NormalViterbiChanceHandler extends ChanceHandler {
+public class Viterbi extends ChanceCalculator {
 
-	private static final Logger logger = LogManager.getLogger(NormalViterbiChanceHandler.class);
+	private static final Logger logger = LogManager.getLogger(Viterbi.class);
 
-	public NormalViterbiChanceHandler(List<State> possibleStates) {
+	public Viterbi(List<State> possibleStates) {
 		super(possibleStates);
 	}
 
 	/**
-	 * MAX(State chance at position * (TransitionChance to the target state)) for all states TO the given target state
-	 * @param targetState
-	 * @param position
+	 * MAX(State chance at position * TransitionChance to the target state) of all states TO the given target state
+	 * @param toState
+	 * @param position at which the last state is saved 
 	 * @return max value over all possible transitions
 	 */
+	@Override
 	public double getNextMCalculation(State targetState, int position) {
 		double max = Double.NEGATIVE_INFINITY;
 		for (State state : states) {
@@ -39,6 +40,10 @@ public class NormalViterbiChanceHandler extends ChanceHandler {
 		return max;
 	}
 
+	/**
+	 * calculation: max(m) * chance for dice roll
+	 */
+	@Override
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
 		double m = getNextMCalculation(state, position);
 		double calculatedChance = state.getChanceForEye(eyeNumber) * m;
