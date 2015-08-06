@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.bio.common.ConsoleReader;
-import com.bio.ueb3.algorithms.ChanceHandler;
+import com.bio.ueb3.algorithms.ChanceCalculator;
 import com.bio.ueb3.algorithms.ForwardProbability;
-import com.bio.ueb3.algorithms.LogViterbiChanceHandler;
-import com.bio.ueb3.algorithms.NormalViterbiChanceHandler;
+import com.bio.ueb3.algorithms.LogarithmicViterbi;
+import com.bio.ueb3.algorithms.Viterbi;
 
 public class AlgorithmMenu {
 
@@ -30,7 +30,7 @@ public class AlgorithmMenu {
 		menuPoints.put(FACTOR_FB, "forward probability with factor 6");
 	}
 
-	public ChanceHandler selectChanceHandler(List<State> possibleStates) {
+	public ChanceCalculator selectChanceHandler(List<State> possibleStates) {
 
 		ConsoleReader reader = new ConsoleReader();
 		boolean valid = false;
@@ -41,9 +41,9 @@ public class AlgorithmMenu {
 				// switch the menu to select the algorithm
 				switch (selection) {
 					case NORMAL_VITERBI:
-						return new NormalViterbiChanceHandler(possibleStates);
+						return new Viterbi(possibleStates);
 					case LOG_VITERBI:
-						return new LogViterbiChanceHandler(possibleStates);
+						return new LogarithmicViterbi(possibleStates);
 					case NORMAL_FB:
 						return ForwardProbability.withoutFactor(possibleStates);
 					case FACTOR_FB:

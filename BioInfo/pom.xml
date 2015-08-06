@@ -91,7 +91,7 @@
 					<archive>
 						<manifest>
 							<!-- Jar file entry point -->
-							<mainClass>com.bio.ueb2.Main</mainClass>
+							<mainClass>com.bio.ueb3.Ueb3Main</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>

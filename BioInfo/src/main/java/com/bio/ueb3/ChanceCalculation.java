@@ -3,7 +3,7 @@ package com.bio.ueb3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.bio.ueb3.algorithms.ChanceHandler;
+import com.bio.ueb3.algorithms.ChanceCalculator;
 
 /**
  * generic chance calculation for algorithmus that go from first char to the last (forward). It's pretty much straight forward in these case.
@@ -11,28 +11,27 @@ import com.bio.ueb3.algorithms.ChanceHandler;
  * is always the same: iterate through the sequence and calculate all the possible chances to "be at in the current state" for every given state. This calculation
  * is done by the given ChanceHandler, so you just have to call it. After calculation at a point in the sequence, the highest chance of all chances at the current position
  * is taken and added to the current path.
- *
  */
 public class ChanceCalculation {
 	private static final Logger logger = LogManager.getLogger(ChanceCalculation.class);
 
-	private ChanceHandler chances;
+	private ChanceCalculator chances;
 	private String numberSequence;
 
 	/**
 	 * @param numberSequence
 	 * @param chances special handler for Viterbi chance calculations
 	 */
-	public ChanceCalculation(String numberSequence, ChanceHandler chances) {
+	public ChanceCalculation(String numberSequence, ChanceCalculator chances) {
 		this.numberSequence = new StringBuilder(numberSequence).reverse().toString();
 		this.chances = chances;
 	}
 
-	public ChanceHandler getChances() {
+	public ChanceCalculator getChances() {
 		return chances;
 	}
 
-	public void setChances(ChanceHandler chances) {
+	public void setChances(ChanceCalculator chances) {
 		this.chances = chances;
 	}
 

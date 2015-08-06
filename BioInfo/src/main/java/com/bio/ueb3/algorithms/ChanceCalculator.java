@@ -15,15 +15,15 @@ import com.bio.ueb3.State;
  * For every possible algorithm inherited from here, the steps are the same. The final path taken is always the concatenation of states with
  * the highest chance at a position. 
  */
-public abstract class ChanceHandler {
+public abstract class ChanceCalculator {
 
-	private static final Logger logger = LogManager.getLogger(ChanceHandler.class);
+	private static final Logger logger = LogManager.getLogger(ChanceCalculator.class);
 
 	/** map with all the chances for every possible state. A chance list can be accessed by the ID of the state */
 	protected Map<Integer, List<Double>> stateLists;
 	protected List<State> states;
 
-	public ChanceHandler(List<State> possibleStates) {
+	public ChanceCalculator(List<State> possibleStates) {
 		stateLists = new TreeMap<>();
 		states = possibleStates;
 		for (State state : possibleStates) {
@@ -85,15 +85,15 @@ public abstract class ChanceHandler {
 	}
 
 	/**
+	 * Note: this could be something like a normal addition or multiplikation with a transition and the last possible chance.
 	 * @param targetState
 	 * @param position
-	 * @return next value calculated with the M value (sum or multiplication)
+	 * @return next possible M value
 	 */
 	public abstract double getNextMCalculation(State targetState, int position);
 
 	/**
-	 * calculate the next chance for a given state and an eye number. For usage of the last state, the current position
-	 * is also given
+	 * calculate the next chance for a given state and an eye number. For usage of the last state, the current position is also given
 	 * @param state
 	 * @param eyeNumber
 	 * @param position

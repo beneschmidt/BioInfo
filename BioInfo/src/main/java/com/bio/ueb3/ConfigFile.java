@@ -14,9 +14,6 @@ public class ConfigFile {
 		List<String> rows = FileReaderHelper.readFile(fileName);
 		System.out.println(rows.get(0));
 		numberSequence = new StringBuilder(rows.get(0).split(" ")[1]).toString();
-		//		numberSequence = new StringBuilder(rows.get(0).split(" ")[1]).reverse().toString();
-		originalDiceSequence = rows.get(1).split(" ")[1];
-		viterbiDiceSequence = rows.get(1).split(" ")[1];
 	}
 
 	public String getNumberSequence() {

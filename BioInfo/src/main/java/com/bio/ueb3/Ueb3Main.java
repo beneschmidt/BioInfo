@@ -1,8 +1,13 @@
 package com.bio.ueb3;
 
-import com.bio.ueb3.algorithms.ChanceHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.bio.ueb3.algorithms.ChanceCalculator;
 
 public class Ueb3Main {
+
+	private static final Logger logger = LogManager.getLogger(Ueb3Main.class);
 
 	public static void main(String[] args) {
 
@@ -11,12 +16,19 @@ public class Ueb3Main {
 
 		// init the state chances including an initial chances to be selected
 		AlgorithmMenu menu = new AlgorithmMenu();
-		ChanceHandler chances = menu.selectChanceHandler(initializer.getStates());
-		chances.initStatesWithZeroChanceExceptFirst();
 
+		// select the chance calculation algorithm
+		ChanceCalculator calculator = menu.selectChanceHandler(initializer.getStates());
+
+		// init the first "column" with zero chances, except the first state, it has 100% chance
+		calculator.initStatesWithZeroChanceExceptFirst();
+
+		// read the chances and transitions from a config file
 		ConfigFile configFile = new ConfigFile("resources/wuerfel.txt");
 
-		ChanceCalculation viterbi = new ChanceCalculation(configFile.getNumberSequence(), chances);
-		System.out.println("\n\nFINAL PATH: " + viterbi.calculate());
+		// calculate
+		ChanceCalculation calculation = new ChanceCalculation(configFile.getNumberSequence(), calculator);
+		String path = calculation.calculate();
+		logger.info("\n\nFINAL PATH: " + path);
 	}
 }
