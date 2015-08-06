@@ -2,9 +2,14 @@ package com.bio.ueb3.algorithms;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.bio.ueb3.State;
 
 public class ForwardProbability extends ChanceHandler {
+
+	private static final Logger logger = LogManager.getLogger(ForwardProbability.class);
 
 	private int factor;
 
@@ -47,7 +52,7 @@ public class ForwardProbability extends ChanceHandler {
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
 		double m = getNextMCalculation(state, position);
 		double calculatedChance = state.getChanceForEye(eyeNumber) * m;
-		logger.info("CHANCE TAKEN: " + m + " * " + state.getChanceForEye(eyeNumber) + " = " + calculatedChance);
+		logger.debug("CHANCE TAKEN: " + m + " * " + state.getChanceForEye(eyeNumber) + " = " + calculatedChance);
 		return calculatedChance * factor;
 	}
 }

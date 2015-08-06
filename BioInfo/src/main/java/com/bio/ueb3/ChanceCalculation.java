@@ -24,7 +24,7 @@ public class ChanceCalculation {
 	 * @param chances special handler for Viterbi chance calculations
 	 */
 	public ChanceCalculation(String numberSequence, ChanceHandler chances) {
-		this.numberSequence = numberSequence;
+		this.numberSequence = new StringBuilder(numberSequence).reverse().toString();
 		this.chances = chances;
 	}
 
@@ -44,7 +44,7 @@ public class ChanceCalculation {
 		StringBuilder path = new StringBuilder();
 		for (int i = 0; i < numberSequence.length(); i++) {
 			int nextValue = Integer.parseInt(numberSequence.charAt(i) + "");
-			logger.info("[NEXT VALUE] " + nextValue);
+			logger.debug("[NEXT VALUE] " + nextValue);
 
 			// check the chances for every state and update their state list
 			for (State state : chances.getStates()) {
@@ -52,7 +52,7 @@ public class ChanceCalculation {
 				chances.addNextChanceForState(state, nextChance);
 			}
 
-			logger.info("==================");
+			logger.debug("==================");
 			// append the max chance of the current position to the path
 			path.append(chances.getStateWithMaxChanceAtPosition(i + 1).getAlias());
 		}

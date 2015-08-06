@@ -13,6 +13,8 @@ import com.bio.ueb3.algorithms.NormalViterbiChanceHandler;
 
 public class AlgorithmMenu {
 
+	private static final int FACTOR = 6;
+
 	private static final int FACTOR_FB = 4;
 	private static final int NORMAL_FB = 3;
 	private static final int LOG_VITERBI = 2;
@@ -25,7 +27,7 @@ public class AlgorithmMenu {
 		menuPoints.put(NORMAL_VITERBI, "normal Viterbi");
 		menuPoints.put(LOG_VITERBI, "logarithmic Viterbi");
 		menuPoints.put(NORMAL_FB, "normal forward probability");
-		menuPoints.put(FACTOR_FB, "forward probability with factor");
+		menuPoints.put(FACTOR_FB, "forward probability with factor 6");
 	}
 
 	public ChanceHandler selectChanceHandler(List<State> possibleStates) {
@@ -45,7 +47,7 @@ public class AlgorithmMenu {
 					case NORMAL_FB:
 						return ForwardProbability.withoutFactor(possibleStates);
 					case FACTOR_FB:
-						return ForwardProbability.withFactor(possibleStates, 6);
+						return ForwardProbability.withFactor(possibleStates, FACTOR);
 					default:
 						// default case resets the valid flag to redo the menu
 						System.out.println(selection + " is not a valid selection");

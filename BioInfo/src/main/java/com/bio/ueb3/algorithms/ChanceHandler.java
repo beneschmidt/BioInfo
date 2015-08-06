@@ -17,7 +17,7 @@ import com.bio.ueb3.State;
  */
 public abstract class ChanceHandler {
 
-	protected static final Logger logger = LogManager.getLogger(ChanceHandler.class);
+	private static final Logger logger = LogManager.getLogger(ChanceHandler.class);
 
 	/** map with all the chances for every possible state. A chance list can be accessed by the ID of the state */
 	protected Map<Integer, List<Double>> stateLists;
@@ -67,7 +67,7 @@ public abstract class ChanceHandler {
 		//		for (State state : reverseList) {
 		for (State state : states) {
 			double next = getStateChanceAtPosition(state, position);
-			logger.info(next + "> " + max + ", " + (next > max));
+			logger.debug(next + "> " + max + ", " + (next > max));
 			if (next > max) {
 				max = next;
 				maxState = state;

@@ -2,9 +2,14 @@ package com.bio.ueb3.algorithms;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.bio.ueb3.State;
 
 public class LogViterbiChanceHandler extends ChanceHandler {
+
+	private static final Logger logger = LogManager.getLogger(LogViterbiChanceHandler.class);
 
 	public LogViterbiChanceHandler(List<State> possibleStates) {
 		super(possibleStates);
@@ -19,7 +24,7 @@ public class LogViterbiChanceHandler extends ChanceHandler {
 	public double getNextMCalculation(State toState, int position) {
 		double max = Double.NEGATIVE_INFINITY;
 		for (State fromState : states) {
-			logger.info("From " + fromState.getId() + " to " + toState.getId() + ": " + getStateChanceAtPosition(fromState, position) + " + "
+			logger.debug("From " + fromState.getId() + " to " + toState.getId() + ": " + getStateChanceAtPosition(fromState, position) + " + "
 					+ fromState.getLogChanceForTransition(toState));
 			// naechstes M = zuvorige Chance des aktuellen States + logarithmische Uebergangs-WSK
 			double nextChance = getStateChanceAtPosition(fromState, position) + fromState.getLogChanceForTransition(toState);
@@ -36,7 +41,7 @@ public class LogViterbiChanceHandler extends ChanceHandler {
 	 */
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
 		double maxM = getNextMCalculation(state, position);
-		logger.info(state.getChanceForEye(eyeNumber) + " + " + maxM);
+		logger.debug(state.getChanceForEye(eyeNumber) + " + " + maxM);
 
 		// naechste Chance = maxM + logarithmische Chance pro fuer Augenwurf
 		return state.getLogChanceForEye(eyeNumber) + maxM;

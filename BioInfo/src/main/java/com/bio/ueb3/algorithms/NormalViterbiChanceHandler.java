@@ -2,6 +2,9 @@ package com.bio.ueb3.algorithms;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.bio.ueb3.State;
 
 /**
@@ -10,6 +13,8 @@ import com.bio.ueb3.State;
  *
  */
 public class NormalViterbiChanceHandler extends ChanceHandler {
+
+	private static final Logger logger = LogManager.getLogger(NormalViterbiChanceHandler.class);
 
 	public NormalViterbiChanceHandler(List<State> possibleStates) {
 		super(possibleStates);
@@ -24,7 +29,7 @@ public class NormalViterbiChanceHandler extends ChanceHandler {
 	public double getNextMCalculation(State targetState, int position) {
 		double max = Double.NEGATIVE_INFINITY;
 		for (State state : states) {
-			logger.info("From " + state.getId() + " to " + targetState.getId() + ": " + getStateChanceAtPosition(state, position) + " * "
+			logger.debug("From " + state.getId() + " to " + targetState.getId() + ": " + getStateChanceAtPosition(state, position) + " * "
 					+ state.getChanceForTransition(targetState));
 			double nextChance = getStateChanceAtPosition(state, position) * state.getChanceForTransition(targetState);
 			if (nextChance > max) {
@@ -37,7 +42,7 @@ public class NormalViterbiChanceHandler extends ChanceHandler {
 	public double getNextChanceForState(State state, int eyeNumber, int position) {
 		double m = getNextMCalculation(state, position);
 		double calculatedChance = state.getChanceForEye(eyeNumber) * m;
-		logger.info("CHANCE TAKEN: " + m + " * " + state.getChanceForEye(eyeNumber) + " = " + calculatedChance);
+		logger.debug("CHANCE TAKEN: " + m + " * " + state.getChanceForEye(eyeNumber) + " = " + calculatedChance);
 		return calculatedChance;
 	}
 }
