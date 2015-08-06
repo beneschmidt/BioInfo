@@ -31,4 +31,5 @@ public class Ueb3Main {
 		String path = calculation.calculate();
 		logger.info("\n\nFINAL PATH: " + path);
 	}
+
 }
